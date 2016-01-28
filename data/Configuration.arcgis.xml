@@ -1,0 +1,10 @@
+<MSC>
+
+    <!--  Connector COnfiguration -->
+    <Connector driver="esri">
+    
+        <url value="http://services.nationalmap.gov/arcgis/rest/services/USGSImageOnlyLarge/MapServer?" />
+
+    </Connector>
+
+</MSC>
