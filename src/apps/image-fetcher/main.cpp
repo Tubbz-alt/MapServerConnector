@@ -45,6 +45,13 @@ int main( int argc, char* argv[] )
     // Get the feature list
 
 
+
+    // Disconnect the Server
+    connector->Disconnect( status );
+    if( status.Get_Code() != MSC::StatusCode::SUCCESS ){
+        std::cerr << "Error during the disconnect. Details: " + status.ToString() << std::endl;
+    }
+
     // Exit
     return 0;
 }

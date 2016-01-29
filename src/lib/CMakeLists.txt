@@ -6,6 +6,13 @@
 #
 
 
+#---------------------#
+#-     Find Curl     -#
+#---------------------#
+find_package(CURL)
+include_directories(${CURL_INCLUDE_DIRS})
+
+
 #------------------------------#
 #-    Project Source Files    -#
 #------------------------------#
@@ -37,5 +44,9 @@ set( LIBRARY_HEADERS
 add_library(MSC SHARED
             ${LIBRARY_SOURCES}
             ${LIBRARY_HEADERS}
+)
+            
+target_link_libraries( MSC             
+                       ${CURL_LIBRARIES}
 )
 

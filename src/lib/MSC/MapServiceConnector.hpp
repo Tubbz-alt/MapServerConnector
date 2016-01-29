@@ -12,7 +12,7 @@
 
 // MSC Libraries
 #include "Status.hpp"
-
+#include "Base_Connector.hpp"
 
 namespace MSC{
 
@@ -37,12 +37,26 @@ class MapServiceConnector
          * @brief Connect to the Remote System
         */
         void Connect( Status& status );
+        
 
+        /**
+         * @brief Disconnect the Connection
+         */
+        void Disconnect( Status& status );
+
+
+        /**
+         * @brief Check the connection
+         */
+        bool Is_Connected()const;
 
     private:
         
         /// Class Name
         std::string m_class_name;
+        
+        /// Connection Manager
+        Base_Connector::ptr_t m_connection_manager;
 
 
 }; // End of MapServiceConnector Class

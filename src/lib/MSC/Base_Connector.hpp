@@ -11,6 +11,10 @@
 #include <string>
 
 
+// MSC Libraries
+#include "Status.hpp"
+
+
 namespace MSC{
 
 /**
@@ -21,13 +25,39 @@ class Base_Connector
     public:
         
         /// Shared Pointer
-        std::shared_ptr<Base_Connector> ptr_t;
+        typedef std::shared_ptr<Base_Connector> ptr_t;
         
 
         /**
          * @brief Constructor
         */
         Base_Connector();
+
+        
+        /**
+         * @brief Connect to the remote system.
+         */
+        virtual void Connect( Status& status ) = 0;
+    
+        
+        /**
+         * @brief Disconnect the system
+         */
+        virtual void Disconnect( Status& status ) = 0;
+
+
+        /**
+         * @brief Check the Connection Status.
+         */
+        inline bool Is_Connected()const{
+            return m_is_connected;
+        }
+
+
+    protected:
+        
+        /// Connection Status
+        bool m_is_connected;
 
     private:
         
