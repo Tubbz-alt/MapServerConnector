@@ -17,14 +17,31 @@ namespace MSC{
 /*****************************/
 std::string StatusCodeToString( StatusCode const& code )
 {
-    if( code == StatusCode::SUCCESS )
-    {
+    // Successful
+    if( code == StatusCode::SUCCESS ){
         return "SUCCESS";
     }
-    else if( code == StatusCode::NOT_IMPLEMENTED_YET )
-    {
+
+    // Not Implemented Yet
+    else if( code == StatusCode::NOT_IMPLEMENTED_YET ){
         return "NOT_IMPLEMENTED_YET";
     }
+
+    // No Connector Found
+    else if( code == StatusCode::NO_CONNECTOR_FOUND ){
+        return "NO_CONNECTOR_FOUND";
+    }
+
+    // No Configuration Value Found
+    else if( code == StatusCode::NO_KEY_FOUND ){
+        return "NO_KEY_FOUND";
+    }
+
+    // Connection Error
+    else if( code == StatusCode::CONNECTION_ERROR ){
+        return "CONNECTION_ERROR";
+    }
+
     return "UNKNOWN";
 }
 

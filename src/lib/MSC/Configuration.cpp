@@ -31,6 +31,27 @@ void Configuration::Insert( const std::string& key,
 }
 
 
+/************************************/
+/*          Get Log Value           */
+/************************************/
+std::string Configuration::Get_Value( const std::string& key,
+                                      Status&            status )const
+{
+    // Return Success
+    status = Status( StatusCode::SUCCESS );
+
+    // Check if the key exists
+    if( m_pairs.find(key) != m_pairs.end() )
+    {
+        // Return the value
+        return m_pairs.find(key)->second;
+    }
+
+    // Return Failure
+    status = Status( StatusCode::NO_KEY_FOUND );
+}
+
+
 /**************************************/
 /*          Log Configuration         */
 /**************************************/
@@ -40,7 +61,6 @@ void Configuration::Log()const
     {
         std::cout << it->first << "=" << it->second << std::endl;
     }
-
 }
 
 

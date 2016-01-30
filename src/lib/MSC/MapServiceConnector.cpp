@@ -6,6 +6,7 @@
 #include "MapServiceConnector.hpp"
 
 #include "esri/ArcGIS_Connector.hpp"
+#include "ogc/OGC_Connector.hpp"
 
 
 namespace MSC{
@@ -19,6 +20,19 @@ MapServiceConnector::MapServiceConnector( Configuration const& configuration )
     m_connection_manager(nullptr),
     m_configuration(configuration)
 {
+    // Misc Variables
+    Status status;
+
+    // Create the Connection Manager
+    std::string driver_name = m_configuration.Get_Value("connector", status);
+    if( status.Get_Code() == StatusCode::SUCCESS ){
+        if( driver_name == "arcgis" ){
+            m_connection_manager = std::make_shared<ArcGIS_Connector>(m_configuration);
+        }
+        else if( driver_name == "ogc" ){
+            m_connection_manager = std::make_shared<OGC_Connector>(m_configuration);
+        }
+    }
 }
 
 
@@ -27,8 +41,14 @@ MapServiceConnector::MapServiceConnector( Configuration const& configuration )
 /*****************************************/
 void MapServiceConnector::Connect( Status& status )
 {
-    // Connect
-    m_connection_manager = std::make_shared<ArcGIS_Connector>(m_configuration);
+    
+    // Check if the connector manager exists
+    if( m_connection_manager == nullptr )
+    {
+        status = Status( StatusCode::NO_CONNECTOR_FOUND,
+                         "Connection-Manager is currently null.");
+        return;
+    }
 
     //  Connect
     m_connection_manager->Connect( status );

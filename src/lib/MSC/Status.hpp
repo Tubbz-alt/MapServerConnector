@@ -20,6 +20,9 @@ enum class StatusCode : int16_t{
     SUCCESS = 0,
     UNKNOWN = 1,
     NOT_IMPLEMENTED_YET = 2,
+    NO_CONNECTOR_FOUND  = 3,
+    NO_KEY_FOUND        = 4,
+    CONNECTION_ERROR    = 5,
 }; // End of StatusCode Enumeration
 
 

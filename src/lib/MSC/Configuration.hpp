@@ -12,6 +12,10 @@
 #include <string>
 
 
+// MSC Libraries
+#include "Status.hpp"
+
+
 namespace MSC{
 
 /**
@@ -36,6 +40,13 @@ class Configuration
         */
         void Insert( const std::string& key,
                      const std::string& value );
+        
+
+        /**
+         * @brief Get the requested flag value.
+        */
+        std::string Get_Value( const std::string& key,
+                               Status&            status )const;
 
         
         /**

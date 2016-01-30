@@ -1,0 +1,169 @@
+/**
+ * @file    OGC_Connector.cpp
+ * @author  Marvin Smith
+ * @date    1/29/2016
+*/
+#include "OGC_Connector.hpp"
+
+// C++ Libraries
+#include <iostream>
+#include <string>
+
+namespace MSC{
+
+
+/***********************************************/
+/*          OGC Connector Constructor          */
+/***********************************************/
+OGC_Connector::OGC_Connector( Configuration const& configuration )
+ : Base_Connector( configuration ),
+   m_class_name("OGC_Connector"),
+   m_curl(nullptr)
+{
+    // Misc Variables
+    Status status;
+    
+    // Get the URL
+    m_url = configuration.Get_Value("url", status);
+
+    // Get WMS info
+    m_wms_version = configuration.Get_Value("wms_version", status);
+}
+
+
+/********************************/
+/*         Destructor           */
+/********************************/
+OGC_Connector::~OGC_Connector()
+{
+    // Check if still connected
+    if( Is_Connected() == true )
+    {
+        Status status;
+        Disconnect( status );
+    }
+}
+
+
+/****************************/
+/*          Connect         */
+/****************************/
+void OGC_Connector::Connect( Status& status )
+{
+    // Create the network connection
+    curl_global_init(CURL_GLOBAL_ALL);
+    m_curl = curl_easy_init();
+    
+    // Check the initialization
+    if( m_curl == nullptr ||
+        m_curl == NULL )
+    {
+        status = Status( StatusCode::CONNECTION_ERROR,
+                         "curl failed to initialize.");
+        return;
+    }
+    
+    // Setup CURL
+    char* typeinfo;
+    CURLcode cresult;
+    
+
+    // Construct URL
+    std::string url = Create_Get_Capabilities_Query();
+    curl_easy_setopt( m_curl,
+                      CURLOPT_URL,
+                      url.c_str());
+    
+    
+    // Create callbacks and data
+    curl_easy_setopt( m_curl, 
+                      CURLOPT_WRITEFUNCTION, 
+                      &OGC_Connector::Callback_Handler );
+    curl_easy_setopt( m_curl,
+                      CURLOPT_WRITEDATA,
+                      this );
+    
+    //cresult = curl_easy_perform(m_curl);
+    
+
+    /*
+    curl_easy_getinfo( image, CURLINFO_CONTENT_TYPE, &typeinfo);
+    imgresult = curl_easy_perform(image);
+    */
+   
+    
+    // Set the Connection Status
+    m_is_connected = true;
+
+    // Return success
+    status = Status(StatusCode::SUCCESS);
+}
+
+
+/*********************************/
+/*          Disconnect           */
+/*********************************/
+void OGC_Connector::Disconnect( Status& status )
+{
+    // Finalize Curl
+    curl_easy_cleanup(m_curl);
+    curl_global_cleanup();
+    
+    // Set the connection status
+    m_is_connected = false;
+
+    // Return success
+    status = Status(StatusCode::SUCCESS);
+}
+
+
+/*************************************************/
+/*          Create a Get Features Query          */
+/*************************************************/
+std::string OGC_Connector::Create_Get_Capabilities_Query()const
+{
+    // Create string
+    std::string output = m_url + "?SERVICE=WMS;";
+    
+    // Add the version
+    output += "VERSION=" + m_wms_version + "REQUEST=GetCapabilities";
+
+    return output;
+}
+
+
+/************************************/
+/*          Write the Data          */
+/************************************/
+size_t OGC_Connector::Write_Data( void*   data,
+                                  size_t  size,
+                                  size_t  nmemb )
+{
+    // Compute buffer size
+    size_t num_bytes = size * nmemb;
+    
+    char *iter = (char*)data;
+    char *iterEnd = iter + num_bytes;
+
+    std::string res = std::string(iter, iterEnd);
+    std::cout << "Output: " << res << std::endl;
+
+    return num_bytes;
+}
+
+
+/************************************/
+/*          Callback Handler        */
+/************************************/
+size_t OGC_Connector::Callback_Handler( void *ptr, 
+                                        size_t size,
+                                        size_t nmemb, 
+                                        void* pInstance )
+{
+
+    // Cast the handler
+    return static_cast<OGC_Connector*>(pInstance)->Write_Data( ptr, size, nmemb );
+
+}
+
+} // End of MSC Namespace

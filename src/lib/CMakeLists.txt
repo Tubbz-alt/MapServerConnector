@@ -24,6 +24,7 @@ set( LIBRARY_SOURCES
      MSC/Status.cpp
      MSC/esri/ArcGIS_Connector.cpp
      MSC/io/ConfigParser.cpp
+     MSC/ogc/OGC_Connector.cpp
 )
 
 
@@ -39,6 +40,7 @@ set( LIBRARY_HEADERS
      MSC/Status.hpp
      MSC/esri/ArcGIS_Connector.hpp
      MSC/io/ConfigParser.hpp
+     MSC/ogc/OGC_Connector.hpp
 )
 
 

@@ -26,7 +26,6 @@ int main( int argc, char* argv[] )
     // Create a MapServiceConnector
     MSC::MapServiceConnector::ptr_t connector = MSC::MapServiceConnectorFactory::Create( config_pathname, status );
 
-
     //  Make sure the creation succeeded
     if( status.Get_Code() != MSC::StatusCode::SUCCESS ){
         throw std::runtime_error("Initialization of connector failed. Details: " + status.ToString());
@@ -43,7 +42,6 @@ int main( int argc, char* argv[] )
     }
 
     // Get the feature list
-
 
 
     // Disconnect the Server
