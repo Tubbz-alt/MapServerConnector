@@ -12,6 +12,7 @@
 
 
 // MSC Libraries
+#include "Configuration.hpp"
 #include "Status.hpp"
 
 
@@ -31,7 +32,7 @@ class Base_Connector
         /**
          * @brief Constructor
         */
-        Base_Connector();
+        Base_Connector( Configuration const& configuration );
 
         
         /**
@@ -58,6 +59,9 @@ class Base_Connector
         
         /// Connection Status
         bool m_is_connected;
+
+        /// Configuration 
+        Configuration m_configuration;
 
     private:
         

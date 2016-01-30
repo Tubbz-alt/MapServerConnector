@@ -18,10 +18,12 @@ include_directories(${CURL_INCLUDE_DIRS})
 #------------------------------#
 set( LIBRARY_SOURCES
      MSC/Base_Connector.cpp
+     MSC/Configuration.cpp
      MSC/MapServiceConnector.cpp
      MSC/MapServiceConnectorFactory.cpp
      MSC/Status.cpp
      MSC/esri/ArcGIS_Connector.cpp
+     MSC/io/ConfigParser.cpp
 )
 
 
@@ -31,10 +33,12 @@ set( LIBRARY_SOURCES
 set( LIBRARY_HEADERS
      MSC.hpp
      MSC/Base_Connector.hpp
+     MSC/Configuration.hpp
      MSC/MapServiceConnector.hpp
      MSC/MapServiceConnectorFactory.hpp
      MSC/Status.hpp
      MSC/esri/ArcGIS_Connector.hpp
+     MSC/io/ConfigParser.hpp
 )
 
 

@@ -12,8 +12,8 @@ namespace MSC{
 /*************************************/
 /*        ArcGIS Constructor         */
 /*************************************/
-ArcGIS_Connector::ArcGIS_Connector()
- : Base_Connector(),
+ArcGIS_Connector::ArcGIS_Connector( Configuration const& configuration )
+ : Base_Connector( configuration ),
    m_class_name("ArcGIS_Connector"),
    m_curl(nullptr)
 {

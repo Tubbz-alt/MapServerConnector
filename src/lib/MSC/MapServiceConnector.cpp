@@ -14,8 +14,10 @@ namespace MSC{
 /**********************************/
 /*          Constructor           */
 /**********************************/
-MapServiceConnector::MapServiceConnector()
-  : m_class_name("MapServiceConnector")
+MapServiceConnector::MapServiceConnector( Configuration const& configuration )
+  : m_class_name("MapServiceConnector"),
+    m_connection_manager(nullptr),
+    m_configuration(configuration)
 {
 }
 
@@ -26,7 +28,7 @@ MapServiceConnector::MapServiceConnector()
 void MapServiceConnector::Connect( Status& status )
 {
     // Connect
-    m_connection_manager = std::make_shared<ArcGIS_Connector>();
+    m_connection_manager = std::make_shared<ArcGIS_Connector>(m_configuration);
 
     //  Connect
     m_connection_manager->Connect( status );

@@ -13,6 +13,8 @@
 // MSC Libraries
 #include "Status.hpp"
 #include "Base_Connector.hpp"
+#include "Configuration.hpp"
+
 
 namespace MSC{
 
@@ -30,7 +32,7 @@ class MapServiceConnector
         /**
          * @brief Constructor
         */
-        MapServiceConnector();
+        MapServiceConnector( Configuration const& configuration );
 
         
         /**
@@ -57,7 +59,9 @@ class MapServiceConnector
         
         /// Connection Manager
         Base_Connector::ptr_t m_connection_manager;
-
+        
+        /// Configuration Options
+        Configuration m_configuration;
 
 }; // End of MapServiceConnector Class
 

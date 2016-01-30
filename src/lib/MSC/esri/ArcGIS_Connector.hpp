@@ -8,6 +8,7 @@
 
 // Project Libraries
 #include "../Base_Connector.hpp"
+#include "../Configuration.hpp"
 
 
 // C++ Libraries
@@ -35,7 +36,7 @@ class ArcGIS_Connector : public Base_Connector
         /**
          * @brief Constructor
          */
-        ArcGIS_Connector();
+        ArcGIS_Connector( Configuration const& configuration );
 
         
         /**
