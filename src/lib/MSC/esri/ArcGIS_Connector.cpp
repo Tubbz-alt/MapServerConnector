@@ -70,5 +70,29 @@ void ArcGIS_Connector::Disconnect( Status& status )
 }
 
 
+/********************************************************/
+/*          Constructor of Connector Generator          */
+/********************************************************/
+ArcGIS_Connector_Generator::ArcGIS_Connector_Generator()
+ : m_class_name("ArcGIS_Connector_Generator")
+{
+}
+
+
+
+/**********************************************/
+/*            Create the Generator            */
+/**********************************************/
+Base_Connector::ptr_t  ArcGIS_Connector_Generator::Create( const Configuration& configuration,
+                                                           Status&              status )
+{
+    // Return the connector
+    status = Status(StatusCode::SUCCESS);
+    return std::make_shared<ArcGIS_Connector>( configuration );
+}
+
+
+
+
 } // End of MSC Namespace
 

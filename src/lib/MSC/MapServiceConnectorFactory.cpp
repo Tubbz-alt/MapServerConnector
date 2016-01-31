@@ -6,6 +6,7 @@
 #include "MapServiceConnectorFactory.hpp"
 
 // MSC Libraries
+#include "Initialization.hpp"
 #include "io/ConfigParser.hpp"
 
 // C++ Libraries
@@ -20,9 +21,17 @@ namespace MSC{
 MapServiceConnector::ptr_t MapServiceConnectorFactory::Create( const std::string& config_pathname,
                                                                Status&            status )
 {
-    
     // Load the Configuration
     Configuration options = ConfigParser(config_pathname).Load_Configuration(status);
+    
+    // Check if Initialized
+    if( Is_Initialized() == false ){
+        status = Initialize( options );
+        if( status.Get_Code() != StatusCode::SUCCESS ){
+            return nullptr;
+        }
+    }
+    
 
     // Check the status
     if( status.Get_Code() != StatusCode::SUCCESS ){

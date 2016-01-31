@@ -11,7 +11,7 @@
 
 // MapServiceConnector
 #include <MSC.hpp>
-
+#include <MSC/utilities/Log_Utilities.hpp>
 
 /**
  * Main Function
@@ -33,6 +33,7 @@ int main( int argc, char* argv[] )
 
     
     // Connect the server
+    BOOST_LOG_TRIVIAL(info) << " Connecting" << std::endl;
     connector->Connect( status );
 
 
@@ -45,12 +46,14 @@ int main( int argc, char* argv[] )
 
 
     // Disconnect the Server
+    BOOST_LOG_TRIVIAL(info) << " Disconnecting" << std::endl;
     connector->Disconnect( status );
     if( status.Get_Code() != MSC::StatusCode::SUCCESS ){
         std::cerr << "Error during the disconnect. Details: " + status.ToString() << std::endl;
     }
 
     // Exit
+    BOOST_LOG_TRIVIAL(info) << " Shutting down application" << std::endl;
     return 0;
 }
 

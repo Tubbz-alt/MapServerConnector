@@ -70,6 +70,43 @@ class Base_Connector
 
 }; // End of Base_Connector Class
 
+
+/**
+ * @class Base_Connector_Generator
+*/
+class Base_Connector_Generator
+{
+    public:
+        
+        /// Pointer Type
+        typedef std::shared_ptr<Base_Connector_Generator> ptr_t;
+
+        /**
+         * @brief Constructor
+        */
+        Base_Connector_Generator();
+
+
+        /**
+         * @brief Create Generator
+        */
+        virtual Base_Connector::ptr_t Create( const Configuration&  configuration,
+                                              Status&               status ) = 0;
+        
+        /**
+         * @brief Get the Class Name
+        */
+        inline virtual std::string Get_Class_Name()const{
+            return m_class_name;
+        }
+        
+    private:
+        
+        /// Class Name
+        std::string m_class_name;
+
+}; // End of Base_Connector_Generator Class
+
 } // End of MSC Namespace
 
 #endif

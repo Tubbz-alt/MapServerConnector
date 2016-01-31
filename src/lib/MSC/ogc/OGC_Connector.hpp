@@ -97,6 +97,37 @@ class OGC_Connector : public Base_Connector
 }; // End of OGC_Connector Class
 
 
+/**
+ * @class OGC_Connector_Generator
+*/
+class OGC_Connector_Generator : public Base_Connector_Generator
+{
+    public:
+        
+        /// Pointer Type
+        typedef std::shared_ptr<OGC_Connector_Generator> ptr_t;
+
+
+        /**
+         * @brief Constructor
+        */
+        OGC_Connector_Generator();
+
+        
+        /**
+         * @brief Create Generator
+        */
+        virtual Base_Connector::ptr_t Create( const Configuration&  configuration,
+                                              Status&               status );
+
+    private:
+        
+        /// Class Name
+        std::string m_class_name;
+
+}; // End of OGC_Connector_Generator Class
+
+
 } // End of MSC Namespace
 
 #endif

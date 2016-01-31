@@ -6,6 +6,21 @@
 #
 
 
+#---------------------------------#
+#-     Find Boost Libraries      -#
+#---------------------------------#
+ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
+find_package( Boost REQUIRED
+                COMPONENTS
+                    system
+                    filesystem
+                    regex
+                    log
+                    thread
+)
+include_directories( ${Boost_INCLUDE_DIRS})
+
+
 #-------------------------------#
 #-        Header Files         -#
 #-------------------------------#
@@ -39,5 +54,6 @@ add_executable( image-fetcher
 #-------------------------------------------#
 target_link_libraries( image-fetcher
                        MSC
+                       ${Boost_LIBRARIES}
 )
 

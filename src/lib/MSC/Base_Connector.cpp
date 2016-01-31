@@ -21,4 +21,15 @@ Base_Connector::Base_Connector( Configuration const& configuration )
 }
 
 
+/********************************************************/
+/*         Base Connector Generator Constructor         */
+/********************************************************/
+Base_Connector_Generator::Base_Connector_Generator()
+ : m_class_name("Base_Connector_Generator")
+{
+
+}
+
+
+
 } // End of MSC Namespace

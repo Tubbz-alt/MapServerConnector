@@ -23,6 +23,7 @@ enum class StatusCode : int16_t{
     NO_CONNECTOR_FOUND  = 3,
     NO_KEY_FOUND        = 4,
     CONNECTION_ERROR    = 5,
+    DUPLICATE_GENERATOR = 6,
 }; // End of StatusCode Enumeration
 
 
@@ -72,6 +73,11 @@ class Status
         inline std::string Get_Message()const{
             return m_message;
         }
+        
+        /**
+         * @brief Append Status
+        */
+        void Update( Status const& status );
 
 
         /**
@@ -86,6 +92,9 @@ class Status
 
         /// Status Message
         std::string m_message;
+        
+        /// Set
+        bool m_set;
 
 }; // End of Status Class
 

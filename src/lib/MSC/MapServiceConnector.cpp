@@ -5,8 +5,9 @@
 */
 #include "MapServiceConnector.hpp"
 
-#include "esri/ArcGIS_Connector.hpp"
-#include "ogc/OGC_Connector.hpp"
+// MSC Libraries
+#include "Base_Connector.hpp"
+#include "Connection_Generator_Factory.hpp"
 
 
 namespace MSC{
@@ -23,16 +24,8 @@ MapServiceConnector::MapServiceConnector( Configuration const& configuration )
     // Misc Variables
     Status status;
 
-    // Create the Connection Manager
-    std::string driver_name = m_configuration.Get_Value("connector", status);
-    if( status.Get_Code() == StatusCode::SUCCESS ){
-        if( driver_name == "arcgis" ){
-            m_connection_manager = std::make_shared<ArcGIS_Connector>(m_configuration);
-        }
-        else if( driver_name == "ogc" ){
-            m_connection_manager = std::make_shared<OGC_Connector>(m_configuration);
-        }
-    }
+    m_connection_manager = Connection_Generator_Factory::Create( configuration, 
+                                                                 status );
 }
 
 

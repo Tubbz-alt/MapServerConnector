@@ -37,6 +37,17 @@ void Configuration::Insert( const std::string& key,
 std::string Configuration::Get_Value( const std::string& key,
                                       Status&            status )const
 {
+    return Get_Value( key, "", status );
+}
+
+
+/***********************************/
+/*         Get Log Value           */
+/***********************************/
+std::string Configuration::Get_Value( const std::string& key,
+                                      const std::string& default_value,
+                                      Status&            status )const
+{
     // Return Success
     status = Status( StatusCode::SUCCESS );
 
@@ -49,6 +60,7 @@ std::string Configuration::Get_Value( const std::string& key,
 
     // Return Failure
     status = Status( StatusCode::NO_KEY_FOUND );
+    return default_value;
 }
 
 

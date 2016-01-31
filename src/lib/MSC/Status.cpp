@@ -41,7 +41,12 @@ std::string StatusCodeToString( StatusCode const& code )
     else if( code == StatusCode::CONNECTION_ERROR ){
         return "CONNECTION_ERROR";
     }
-
+    
+    // Duplicate Generator
+    else if( code == StatusCode::DUPLICATE_GENERATOR ){
+        return "DUPLICATE_GENERATOR";
+    }
+        
     return "UNKNOWN";
 }
 
@@ -51,7 +56,8 @@ std::string StatusCodeToString( StatusCode const& code )
 /**************************/
 Status::Status()
  : m_code(StatusCode::UNKNOWN),
-   m_message("")
+   m_message(""),
+   m_set(false)
 {
 }
 
@@ -61,7 +67,8 @@ Status::Status()
 /**************************/
 Status::Status( const StatusCode&   code )
  : m_code(code),
-   m_message("")
+   m_message(""),
+   m_set(true)
 {
 }
 
@@ -72,9 +79,24 @@ Status::Status( const StatusCode&   code )
 Status::Status( const StatusCode&   code,
                 const std::string&  message )
  : m_code(code),
-   m_message(message)
+   m_message(message),
+   m_set(true)
 {
 }
+
+
+/************************************/
+/*          Append Status           */
+/************************************/
+void Status::Update( Status const& status )
+{
+    if( Get_Code() ==  StatusCode::SUCCESS )
+    {
+        (*this) = status;
+    }
+
+}
+
 
 
 /**********************************/

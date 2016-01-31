@@ -11,3 +11,6 @@ add_subdirectory(lib)
 #  Applications
 add_subdirectory(apps)
 
+#  Unit Tests
+add_subdirectory(test)
+

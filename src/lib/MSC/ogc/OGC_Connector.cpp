@@ -9,6 +9,10 @@
 #include <iostream>
 #include <string>
 
+// MSC Libraries
+#include "../utilities/Log_Utilities.hpp"
+
+
 namespace MSC{
 
 
@@ -20,6 +24,9 @@ OGC_Connector::OGC_Connector( Configuration const& configuration )
    m_class_name("OGC_Connector"),
    m_curl(nullptr)
 {
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Method.";
+    
     // Misc Variables
     Status status;
     
@@ -28,6 +35,9 @@ OGC_Connector::OGC_Connector( Configuration const& configuration )
 
     // Get WMS info
     m_wms_version = configuration.Get_Value("wms_version", status);
+    
+    // Log Exit
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", End of Method.";
 }
 
 
@@ -70,6 +80,7 @@ void OGC_Connector::Connect( Status& status )
 
     // Construct URL
     std::string url = Create_Get_Capabilities_Query();
+    BOOST_LOG_TRIVIAL(debug) << CLASS_LOG << ", Constructing Feature Query: " << url;
     curl_easy_setopt( m_curl,
                       CURLOPT_URL,
                       url.c_str());
@@ -83,7 +94,7 @@ void OGC_Connector::Connect( Status& status )
                       CURLOPT_WRITEDATA,
                       this );
     
-    //cresult = curl_easy_perform(m_curl);
+    cresult = curl_easy_perform(m_curl);
     
 
     /*
@@ -123,10 +134,10 @@ void OGC_Connector::Disconnect( Status& status )
 std::string OGC_Connector::Create_Get_Capabilities_Query()const
 {
     // Create string
-    std::string output = m_url + "?SERVICE=WMS;";
+    std::string output = m_url + "?SERVICE=WMS&";
     
     // Add the version
-    output += "VERSION=" + m_wms_version + "REQUEST=GetCapabilities";
+    output += "VERSION=" + m_wms_version + "&REQUEST=GetCapabilities";
 
     return output;
 }
@@ -146,7 +157,7 @@ size_t OGC_Connector::Write_Data( void*   data,
     char *iterEnd = iter + num_bytes;
 
     std::string res = std::string(iter, iterEnd);
-    std::cout << "Output: " << res << std::endl;
+    //std::cout << "Output: " << res << std::endl;
 
     return num_bytes;
 }
@@ -165,5 +176,28 @@ size_t OGC_Connector::Callback_Handler( void *ptr,
     return static_cast<OGC_Connector*>(pInstance)->Write_Data( ptr, size, nmemb );
 
 }
+
+
+/********************************************************/
+/*          Constructor of Connector Generator          */
+/********************************************************/
+OGC_Connector_Generator::OGC_Connector_Generator()
+ : m_class_name("OGC_Connector_Generator")
+{
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Running Constructor.";
+}
+
+
+/**********************************************/
+/*            Create the Generator            */
+/**********************************************/
+Base_Connector::ptr_t  OGC_Connector_Generator::Create( const Configuration& configuration,
+                                                        Status&              status )
+{
+    // Return the connector
+    status = Status(StatusCode::SUCCESS);
+    return std::make_shared<OGC_Connector>( configuration );
+}
+
 
 } // End of MSC Namespace

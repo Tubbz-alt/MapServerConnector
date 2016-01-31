@@ -48,6 +48,22 @@ class Configuration
         std::string Get_Value( const std::string& key,
                                Status&            status )const;
 
+
+        /**
+         * @brief Get the requested flag value with a default.
+        */
+        std::string Get_Value( const std::string& key,
+                               const std::string& default_value,
+                               Status&            status )const;
+        
+
+        /**
+         * @brief Get Number Pairs
+        */
+        inline size_t Get_Number_Pairs()const{
+            return m_pairs.size();
+        }
+
         
         /**
          * @brief Print to string
