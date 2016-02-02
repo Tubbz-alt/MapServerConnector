@@ -14,6 +14,7 @@
 // Project Libraries
 #include "../Base_Connector.hpp"
 #include "../Configuration.hpp"
+#include "../MapRequest.hpp"
 
 
 // Curl

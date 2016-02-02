@@ -139,7 +139,7 @@ std::string ArcGIS_Connector::Create_Get_Map_Query( MapRequest const& request )
 {
     // Create output stream
     std::stringstream sin;
-    sin << m_url << request.To_ArcGIS_URL;
+    sin << m_url << request.To_ArcGIS_URL();
 
     return sin.str();
 }
