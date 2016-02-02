@@ -105,5 +105,21 @@ bool MapServiceConnector::Is_Connected()const
 }
 
 
+/*******************************************/
+/*          Get the Requested Map          */
+/*******************************************/
+MapResponse MapServiceConnector::Get_Map( MapRequest const& request )
+{ 
+    // Check manager if null
+    if( m_connection_manager == nullptr ){
+        return MapResponse(Status(StatusCode::NO_CONNECTOR_FOUND,
+                                  "Map-Connector is null"));
+    }
+
+    // return response
+    return m_connection_manager->Get_Map(request);
+}
+
+
 }  // End of Namespace MSC
 

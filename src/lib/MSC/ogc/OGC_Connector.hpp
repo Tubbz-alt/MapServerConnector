@@ -55,7 +55,12 @@ class OGC_Connector : public Base_Connector
          * @brief Disconnect
          */
         virtual void Disconnect( Status& status );
+        
 
+        /**
+         * @brief Get Map
+        */
+        virtual MapResponse Get_Map( MapRequest const& request );
 
     private:
         
@@ -64,6 +69,12 @@ class OGC_Connector : public Base_Connector
         */
         std::string Create_Get_Capabilities_Query()const;
         
+
+        /**
+         * @brief Create Get Map Query
+        */
+        std::string Create_Get_Map_Query( const MapRequest& request);
+
 
         /**
          * @brief Write Data
@@ -119,6 +130,7 @@ class OGC_Connector_Generator : public Base_Connector_Generator
         */
         virtual Base_Connector::ptr_t Create( const Configuration&  configuration,
                                               Status&               status );
+        
 
     private:
         

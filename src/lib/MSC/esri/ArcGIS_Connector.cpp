@@ -70,6 +70,16 @@ void ArcGIS_Connector::Disconnect( Status& status )
 }
 
 
+/*********************************/
+/*       Get the Request         */
+/*********************************/
+MapResponse  ArcGIS_Connector::Get_Map( MapRequest const& request )
+{
+    return MapResponse(Status(StatusCode::NOT_IMPLEMENTED_YET,
+                              "ArcGIS_Connector Get_Map not implemented yet."));
+}
+
+
 /********************************************************/
 /*          Constructor of Connector Generator          */
 /********************************************************/
@@ -90,8 +100,6 @@ Base_Connector::ptr_t  ArcGIS_Connector_Generator::Create( const Configuration& 
     status = Status(StatusCode::SUCCESS);
     return std::make_shared<ArcGIS_Connector>( configuration );
 }
-
-
 
 
 } // End of MSC Namespace

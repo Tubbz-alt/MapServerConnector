@@ -37,6 +37,7 @@ set( LIBRARY_SOURCES
      MSC/Connection_Generator_Factory.cpp
      MSC/Configuration.cpp 
      MSC/Initialization.cpp
+     MSC/MapRequest.cpp
      MSC/MapServiceConnector.cpp
      MSC/MapServiceConnectorFactory.cpp
      MSC/Status.cpp
@@ -56,6 +57,7 @@ set( LIBRARY_HEADERS
      MSC/Connection_Generator_Factory.hpp
      MSC/Configuration.hpp
      MSC/Initialization.hpp
+     MSC/MapRequest.hpp
      MSC/MapServiceConnector.hpp
      MSC/MapServiceConnectorFactory.hpp
      MSC/Status.hpp

@@ -23,6 +23,10 @@ int main( int argc, char* argv[] )
     std::string output_pathname(argv[2]);
     MSC::Status status = MSC::Status(MSC::StatusCode::SUCCESS);
 
+    // Image Size
+    const int image_rows = 1000;
+    const int image_cols = 1000;
+
     // Create a MapServiceConnector
     MSC::MapServiceConnector::ptr_t connector = MSC::MapServiceConnectorFactory::Create( config_pathname, status );
 
@@ -44,6 +48,21 @@ int main( int argc, char* argv[] )
 
     // Get the feature list
 
+    // Build the request list
+    MSC::MapRequest request( image_cols, 
+                             image_rows,
+                             "EPSG:4326",
+                             -120,
+                             39,
+                             -119,
+                             40,
+                             "image/png");
+    
+    // Add layers
+    request.Add_Layer("0");
+
+    // Get the requested map
+    MSC::MapResponse response = connector->Get_Map( request );
 
     // Disconnect the Server
     BOOST_LOG_TRIVIAL(info) << "Disconnecting" << std::endl;

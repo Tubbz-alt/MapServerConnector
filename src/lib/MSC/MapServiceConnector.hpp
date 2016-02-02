@@ -14,6 +14,7 @@
 #include "Status.hpp"
 #include "Base_Connector.hpp"
 #include "Configuration.hpp"
+#include "MapRequest.hpp"
 
 
 namespace MSC{
@@ -57,6 +58,13 @@ class MapServiceConnector
          * @brief Check the connection
          */
         bool Is_Connected()const;
+
+
+        /**
+         * @brief Get the requested map
+        */
+        MapResponse Get_Map( MapRequest const& request );
+
 
     private:
         

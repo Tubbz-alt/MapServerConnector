@@ -57,6 +57,12 @@ class ArcGIS_Connector : public Base_Connector
         virtual void Disconnect( Status& status );
 
 
+        /**
+         * @brief Get Map
+        */
+        virtual MapResponse Get_Map( const MapRequest& request );
+
+
     private:
         
         /// Class Name
@@ -90,7 +96,8 @@ class ArcGIS_Connector_Generator : public Base_Connector_Generator
         */
         virtual Base_Connector::ptr_t Create( const Configuration&  configuration,
                                               Status&               status );
-
+    
+        
     private:
         
         /// Class Name

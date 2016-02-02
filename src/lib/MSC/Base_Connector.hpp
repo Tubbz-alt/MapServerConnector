@@ -13,6 +13,7 @@
 
 // MSC Libraries
 #include "Configuration.hpp"
+#include "MapRequest.hpp"
 #include "Status.hpp"
 
 
@@ -53,6 +54,12 @@ class Base_Connector
         inline bool Is_Connected()const{
             return m_is_connected;
         }
+
+        
+        /**
+         * @brief Get Map
+        */
+        virtual MapResponse Get_Map( MapRequest const& request ) = 0;
 
 
     protected:
@@ -99,6 +106,7 @@ class Base_Connector_Generator
         inline virtual std::string Get_Class_Name()const{
             return m_class_name;
         }
+
         
     private:
         

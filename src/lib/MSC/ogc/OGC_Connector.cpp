@@ -154,6 +154,24 @@ std::string OGC_Connector::Create_Get_Capabilities_Query()const
 }
 
 
+/**********************************************/
+/*          Create a Get Map Query            */
+/**********************************************/
+std::string OGC_Connector::Create_Get_Map_Query( const MapRequest& request )
+{
+    // Create string
+    std::string output = m_url + "?SERVICE=WMS&";
+
+    // Add the version
+    output += "VERSION=" + m_wms_version;
+
+    // Add the request string
+    output += request.To_WMS_URL();
+
+    return output;
+}
+
+
 /************************************/
 /*          Write the Data          */
 /************************************/
@@ -186,6 +204,45 @@ size_t OGC_Connector::Callback_Handler( void *ptr,
     // Cast the handler
     return static_cast<OGC_Connector*>(pInstance)->Write_Data( ptr, size, nmemb );
 
+}
+
+
+/**********************************/
+/*           Get the map          */
+/**********************************/
+MapResponse OGC_Connector::Get_Map( MapRequest const& request )
+{
+    // Create response
+    MapResponse response;
+    CURLcode cresult;
+
+    // Create URL
+    std::string url = Create_Get_Map_Query( request );
+
+
+    BOOST_LOG_TRIVIAL(debug) << CLASS_LOG << ", Constructing Get Map Query: " << url;
+    curl_easy_setopt( m_curl,
+                      CURLOPT_URL,
+                      url.c_str());
+    
+    
+    // Create callbacks and data
+    curl_easy_setopt( m_curl, 
+                      CURLOPT_WRITEFUNCTION, 
+                      &OGC_Connector::Callback_Handler );
+    curl_easy_setopt( m_curl,
+                      CURLOPT_WRITEDATA,
+                      this );
+    curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1L);
+
+    cresult = curl_easy_perform(m_curl);
+
+
+    // Request
+    response.Set_Status(Status(StatusCode::NOT_IMPLEMENTED_YET));
+
+    // Return response
+    return response;
 }
 
 
