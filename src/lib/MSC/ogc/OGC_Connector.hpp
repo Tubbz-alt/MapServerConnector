@@ -77,20 +77,12 @@ class OGC_Connector : public Base_Connector
 
 
         /**
-         * @brief Write Data
-        */
-        size_t Write_Data( void*   data, 
-                           size_t  size,
-                           size_t  nmemb );
-
-
-        /**
          * @brief Static Runner Method
         */
-        static size_t Callback_Handler( void* ptr,
-                                        size_t size,
-                                        size_t nmemb,
-                                        void*  pInstance );
+        static size_t Init_Callback_Handler( void* ptr,
+                                             size_t size,
+                                             size_t nmemb,
+                                             void*  pInstance );
 
         
         /// Class Name
@@ -104,6 +96,9 @@ class OGC_Connector : public Base_Connector
         
         /// Version Info
         std::string m_wms_version;
+
+        /// Parsed Features / Capabilities
+        std::string m_features;
         
 }; // End of OGC_Connector Class
 

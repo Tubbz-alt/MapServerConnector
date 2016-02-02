@@ -75,6 +75,20 @@ std::string MapRequest::To_WMS_URL()const
 }
 
 
+/****************************************/
+/*          Write to ArcGIS URL         */
+/****************************************/
+std::string MapRequest::To_ArcGIS_URL()const
+{
+    // Create output stream
+    std::stringstream sin;
+
+    sin << "";
+
+    return sin.str();
+}
+
+
 /*****************************/
 /*        Map Response       */
 /*****************************/

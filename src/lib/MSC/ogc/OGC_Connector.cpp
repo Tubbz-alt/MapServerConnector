@@ -96,7 +96,7 @@ void OGC_Connector::Connect( Status& status )
     // Create callbacks and data
     curl_easy_setopt( m_curl, 
                       CURLOPT_WRITEFUNCTION, 
-                      &OGC_Connector::Callback_Handler );
+                      &OGC_Connector::Init_Callback_Handler );
     curl_easy_setopt( m_curl,
                       CURLOPT_WRITEDATA,
                       this );
@@ -172,38 +172,34 @@ std::string OGC_Connector::Create_Get_Map_Query( const MapRequest& request )
 }
 
 
-/************************************/
-/*          Write the Data          */
-/************************************/
-size_t OGC_Connector::Write_Data( void*   data,
-                                  size_t  size,
-                                  size_t  nmemb )
-{
-    // Compute buffer size
-    size_t num_bytes = size * nmemb;
-    
-    char *iter = (char*)data;
-    char *iterEnd = iter + num_bytes;
-
-    std::string res = std::string(iter, iterEnd);
-    //std::cout << "Output: " << res << std::endl;
-
-    return num_bytes;
+        return num_bytes;
 }
 
 
 /************************************/
 /*          Callback Handler        */
 /************************************/
-size_t OGC_Connector::Callback_Handler( void *ptr, 
-                                        size_t size,
-                                        size_t nmemb, 
-                                        void* pInstance )
+size_t OGC_Connector::Init_Callback_Handler( void *ptr, 
+                                             size_t size,
+                                             size_t nmemb, 
+                                             void* pInstance )
 {
+    
+    // Compute buffer size
+    size_t num_bytes = size * nmemb;
+    
+    
+    // Cast the instance
+    OGC_Connector* inst = static_cast<OGC_Connector*>(pInstance);
+    
+    // Create iterators
+    char *iter = (char*)ptr;
+    char *iterEnd = iter + num_bytes;
+
+    inst->m_features = std::string(iter,iterEnd);
 
     // Cast the handler
-    return static_cast<OGC_Connector*>(pInstance)->Write_Data( ptr, size, nmemb );
-
+    return num_bytes;
 }
 
 
