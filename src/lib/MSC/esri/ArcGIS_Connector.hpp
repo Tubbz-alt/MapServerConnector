@@ -65,11 +65,20 @@ class ArcGIS_Connector : public Base_Connector
 
     private:
         
+        /**
+         * @brief Create Get Map Query.
+         */
+         std::string Create_Get_Map_Query( const MapRequest& request );
+
+
         /// Class Name
         std::string m_class_name;
 
         /// Curl Instance
         CURL* m_curl;
+        
+        /// URL
+        std::string m_url;
 
 }; // End of ArcGIS_Connector Class
 

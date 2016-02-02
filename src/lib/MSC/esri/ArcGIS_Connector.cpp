@@ -5,6 +5,13 @@
 */
 #include "ArcGIS_Connector.hpp"
 
+// MSC Libraries
+#include "../utilities/Log_Utilities.hpp"
+
+
+// C++ Libraries
+#include <sstream>
+
 
 namespace MSC{
 
@@ -17,7 +24,22 @@ ArcGIS_Connector::ArcGIS_Connector( Configuration const& configuration )
    m_class_name("ArcGIS_Connector"),
    m_curl(nullptr)
 {
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Method.";
+    
+    // Create the network connection
+    curl_global_init(CURL_GLOBAL_DEFAULT);
+    m_curl = curl_easy_init();
 
+    // Misc Variables
+    Status status;
+
+    // Get the URL
+    m_url = configuration.Get_Value("url", status);
+
+    // Log Exit
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", End of Method";
+    
 }
 
 
@@ -26,12 +48,18 @@ ArcGIS_Connector::ArcGIS_Connector( Configuration const& configuration )
 /********************************/
 ArcGIS_Connector::~ArcGIS_Connector()
 {
+    // Log entry
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Destructor";
+    
     // Check if still connected
     if( Is_Connected() == true )
     {
         Status status;
         Disconnect( status );
     }
+
+    // Log Exit
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", End of Destructor";
 }
 
 
@@ -40,11 +68,46 @@ ArcGIS_Connector::~ArcGIS_Connector()
 /****************************/
 void ArcGIS_Connector::Connect( Status& status )
 {
-    // Create the network connection
-    curl_global_init(CURL_GLOBAL_ALL);
-    m_curl = curl_easy_init();
-
+    // Check the initialization
+    if( m_curl == nullptr || 
+        m_curl == NULL )
+    {
+        status = Status( StatusCode::CONNECTION_ERROR,
+                         "curl failed to initialize");
+        return;
+    }
     
+    // Setup CURL
+    char* typeinfo;
+    CURLcode cresult;
+    
+
+    // Construct URL
+    std::string url = Create_Get_Capabilities_Query();
+    BOOST_LOG_TRIVIAL(debug) << CLASS_LOG << ", Constructing Feature Query: " << url;
+    curl_easy_setopt( m_curl,
+                      CURLOPT_URL,
+                      url.c_str());
+    
+    
+    // Create callbacks and data
+    curl_easy_setopt( m_curl, 
+                      CURLOPT_WRITEFUNCTION, 
+                      &OGC_Connector::Callback_Handler );
+    curl_easy_setopt( m_curl,
+                      CURLOPT_WRITEDATA,
+                      this );
+    curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1L);
+
+    cresult = curl_easy_perform(m_curl);
+    
+
+    /*
+    curl_easy_getinfo( image, CURLINFO_CONTENT_TYPE, &typeinfo);
+    imgresult = curl_easy_perform(image);
+    */
+   
+
     // Set the Connection Status
     m_is_connected = true;
 
@@ -69,7 +132,19 @@ void ArcGIS_Connector::Disconnect( Status& status )
     status = Status(StatusCode::SUCCESS);
 }
 
+/*******************************************/
+/*        Construct a Get Map Query        */
+/*******************************************/
+std::string ArcGIS_Connector::Create_Get_Map_Query( MapRequest const& request )
+{
+    // Create output stream
+    std::stringstream sin;
+    sin << m_url << request.To_ArcGIS_URL;
 
+    return sin.str();
+}
+
+    
 /*********************************/
 /*       Get the Request         */
 /*********************************/

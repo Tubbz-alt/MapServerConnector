@@ -50,7 +50,7 @@ OGC_Connector::OGC_Connector( Configuration const& configuration )
 /********************************/
 OGC_Connector::~OGC_Connector()
 {
-    // Log Entry
+    // Log entry
     BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Destructor";
 
     // Check if still connected

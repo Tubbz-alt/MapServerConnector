@@ -36,6 +36,7 @@ set( LIBRARY_SOURCES
      MSC/Base_Connector.cpp
      MSC/Connection_Generator_Factory.cpp
      MSC/Configuration.cpp 
+     MSC/Enumerations.cpp
      MSC/Initialization.cpp
      MSC/MapRequest.cpp
      MSC/MapServiceConnector.cpp
@@ -56,6 +57,7 @@ set( LIBRARY_HEADERS
      MSC/Base_Connector.hpp
      MSC/Connection_Generator_Factory.hpp
      MSC/Configuration.hpp
+     MSC/Enumerations.hpp
      MSC/Initialization.hpp
      MSC/MapRequest.hpp
      MSC/MapServiceConnector.hpp

@@ -30,6 +30,10 @@ class MapRequest
         
         /**
          * @brief MapRequest
+         *
+         * @param[in] image_cols  Number of image cols.
+         * @param[in] image_rows  Number of image rows.
+         * @param[in] srs         Geographic Coordinate System.        
          */
         MapRequest( const int& image_cols,
                     const int& image_rows,
@@ -70,6 +74,12 @@ class MapRequest
         */
         std::string To_WMS_URL()const;
         
+
+        /**
+         * @brief To ArcGIS URL
+        */
+        std::string To_ArcGIS_URL()const;
+
     private:
 
         /// Class Name
