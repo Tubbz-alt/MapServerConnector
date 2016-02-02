@@ -7,6 +7,7 @@
 #define __MSC_MSC_HPP__
 
 // MSC Header Files
+#include "MSC/Initialization.hpp"
 #include "MSC/MapServiceConnector.hpp"
 #include "MSC/MapServiceConnectorFactory.hpp"
 #include "MSC/Status.hpp"

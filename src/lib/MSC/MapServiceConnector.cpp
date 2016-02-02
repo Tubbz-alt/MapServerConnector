@@ -8,7 +8,7 @@
 // MSC Libraries
 #include "Base_Connector.hpp"
 #include "Connection_Generator_Factory.hpp"
-
+#include "utilities/Log_Utilities.hpp"
 
 namespace MSC{
 
@@ -21,13 +21,33 @@ MapServiceConnector::MapServiceConnector( Configuration const& configuration )
     m_connection_manager(nullptr),
     m_configuration(configuration)
 {
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Constructor";
+
     // Misc Variables
     Status status;
 
     m_connection_manager = Connection_Generator_Factory::Create( configuration, 
                                                                  status );
+    
+    
+    // Log Exit
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", End of Constructor";
+
 }
 
+
+/**********************************/
+/*          Destructor            */
+/**********************************/
+MapServiceConnector::~MapServiceConnector()
+{
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Destructor";
+
+    // Log Exit
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", End of Destructor";
+}
 
 /*****************************************/
 /*     Connect to the Remote System      */

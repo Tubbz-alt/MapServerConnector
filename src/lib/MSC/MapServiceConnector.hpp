@@ -33,6 +33,12 @@ class MapServiceConnector
          * @brief Constructor
         */
         MapServiceConnector( Configuration const& configuration );
+        
+
+        /**
+         * @brief Destructor
+        */
+        virtual ~MapServiceConnector();
 
         
         /**

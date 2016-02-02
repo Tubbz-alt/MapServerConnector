@@ -26,7 +26,11 @@ OGC_Connector::OGC_Connector( Configuration const& configuration )
 {
     // Log Entry
     BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Method.";
-    
+ 
+    // Create the network connection
+    curl_global_init(CURL_GLOBAL_DEFAULT);
+    m_curl = curl_easy_init();
+   
     // Misc Variables
     Status status;
     
@@ -46,12 +50,18 @@ OGC_Connector::OGC_Connector( Configuration const& configuration )
 /********************************/
 OGC_Connector::~OGC_Connector()
 {
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Destructor";
+
     // Check if still connected
     if( Is_Connected() == true )
     {
         Status status;
         Disconnect( status );
     }
+    
+    // Log Exit 
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", End of Destructor";
 }
 
 
@@ -60,9 +70,6 @@ OGC_Connector::~OGC_Connector()
 /****************************/
 void OGC_Connector::Connect( Status& status )
 {
-    // Create the network connection
-    curl_global_init(CURL_GLOBAL_ALL);
-    m_curl = curl_easy_init();
     
     // Check the initialization
     if( m_curl == nullptr ||
@@ -93,7 +100,8 @@ void OGC_Connector::Connect( Status& status )
     curl_easy_setopt( m_curl,
                       CURLOPT_WRITEDATA,
                       this );
-    
+    curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1L);
+
     cresult = curl_easy_perform(m_curl);
     
 
@@ -116,6 +124,9 @@ void OGC_Connector::Connect( Status& status )
 /*********************************/
 void OGC_Connector::Disconnect( Status& status )
 {
+    // Log Entry
+    BOOST_LOG_TRIVIAL(debug) << CLASS_LOG << ", Disconnecting from OGC Connector.";
+
     // Finalize Curl
     curl_easy_cleanup(m_curl);
     curl_global_cleanup();

@@ -27,13 +27,17 @@ static bool init_status = false;
 /********************************************/
 Status Initialize( Configuration const& configuration )
 {
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << __func__ << ", Start of Method";
+
     // Result Status
-    Status status;
+    Status status(StatusCode::SUCCESS);
 
 
     // Initialize Logging
-    std::string log_level = configuration.Get_Value( "log_severity", "info", status );
-    std::string log_path  = configuration.Get_Value( "log_path", "output.log", status );
+    Status temp_status;
+    std::string log_level = configuration.Get_Value( "log_severity", "info", temp_status );
+    std::string log_path  = configuration.Get_Value( "log_path", "output.log", temp_status );
     Initialize_Logger( log_level, log_path );
 
     // Initialize the Connection Generator Factory
@@ -43,11 +47,15 @@ Status Initialize( Configuration const& configuration )
     if( status.Get_Code() != StatusCode::SUCCESS ){
         return status;
     }
+    
+    
+    // Log Exit
+    BOOST_LOG_TRIVIAL(trace) << __func__ << ", End of Method";
 
     
     // Return Success
     init_status = true;
-    return Status(StatusCode::SUCCESS);
+    return status;
 }
 
 
@@ -79,6 +87,9 @@ bool Is_Initialized()
 /**************************************************************/
 Status Initialize_Connection_Generator_Factory()
 {
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << __func__ << ", Start of Method";
+
     // Initialize the Generator
     Status status(StatusCode::SUCCESS);
     status = Connection_Generator_Factory::Initialize();
@@ -89,7 +100,9 @@ Status Initialize_Connection_Generator_Factory()
     // Add each factory
     status.Update( Connection_Generator_Factory::Add_Generator("ogc",  std::make_shared<OGC_Connector_Generator>()));
     status.Update( Connection_Generator_Factory::Add_Generator("esri", std::make_shared<ArcGIS_Connector_Generator>()));
-
+    
+    // Log Exit
+    BOOST_LOG_TRIVIAL(trace) << __func__ << ", End of Method";
 
     // Return Success
     return status;
