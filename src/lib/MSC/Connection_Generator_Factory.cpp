@@ -57,9 +57,16 @@ Status Connection_Generator_Factory::Initialize()
 /******************************/
 Status Connection_Generator_Factory::Finalize()
 {
+    // Log Entry
+    std::string m_class_name = "Connection_Generator_Factory";
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Finalizing";
+
     // Reset the generator
     Status status;
-    Get_Instance(status).reset();
+    if( generator != nullptr ){
+        generator = nullptr;
+    }
+
     return status;
 }
 
@@ -69,6 +76,10 @@ Status Connection_Generator_Factory::Finalize()
 Status Connection_Generator_Factory::Add_Generator( const std::string&               name,
                                                     Base_Connector_Generator::ptr_t  generator )
 {
+    // Log Entry
+    std::string m_class_name = "Connection_Generator_Factory";
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Method.";
+    
     // Get Instance
     Status status;
     gen_ptr instance = Get_Instance(status);
@@ -91,6 +102,10 @@ Status Connection_Generator_Factory::Add_Generator( const std::string&          
 Base_Connector::ptr_t Connection_Generator_Factory::Create( const Configuration&  configuration,
                                                             Status&               status )
 {
+    // Log Entry
+    std::string m_class_name = "Connection_Generator_Factory";
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Method.";
+    
     // Get the name
     std::string name = configuration.Get_Value("connector","",status );
 
@@ -120,6 +135,10 @@ Base_Connector::ptr_t Connection_Generator_Factory::Create( const Configuration&
 /**************************************************/
 gen_ptr Connection_Generator_Factory::Get_Instance( Status& status )
 {
+    // Log Entry
+    std::string m_class_name = "Connection_Generator_Factory";
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Method.";
+
     status = Status(StatusCode::SUCCESS);
     if( generator == nullptr )
     {

@@ -21,7 +21,8 @@ void Decode_Raster( char*            input_buffer,
                     const uint64_t&  input_buffer_size,
                     char*&           output_buffer,
                     int&             output_rows,
-                    int&             output_cols );
+                    int&             output_cols,
+                    int&             output_channels );
 
 
 } // End of MSC Namespace

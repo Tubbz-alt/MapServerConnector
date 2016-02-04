@@ -123,7 +123,7 @@ MapResponse::MapResponse( Status const& status )
 MapResponse::~MapResponse()
 {
     // Log Exit
-    BOOST_LOG_TRIVIAL(trace) << "Start of Destructor";
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Destructor";
 }
 
 
@@ -133,7 +133,7 @@ MapResponse::~MapResponse()
 MapResponse& MapResponse::operator= (MapResponse const& rhs )
 {
     // Log
-    BOOST_LOG_TRIVIAL(trace) << "Start of Assignment Operator";
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Assignment Operator";
 
     // Make sure we don't assign ourselves
     if( this == (&rhs) )
@@ -200,7 +200,6 @@ void MapResponse::Append_Image_Buffer( char*            buffer,
 {
     // Appending data
     BOOST_LOG_TRIVIAL(trace) << "Appending " << buffer_size_bytes << " bytes";
-    std::cout << "Current Size: " << m_image_buffer_size_bytes << std::endl;
 
     
     // Ignore if the buffer is null or the size is empty
@@ -255,7 +254,8 @@ void MapResponse::Append_Image_Buffer( char*            buffer,
 /*********************************************/
 void MapResponse::Get_Unpacked_Image( char*&  buffer,
                                       int&    rows,
-                                      int&    cols )
+                                      int&    cols,
+                                      int&    channels )
 {
     
     // Call on GDAL
@@ -263,7 +263,8 @@ void MapResponse::Get_Unpacked_Image( char*&  buffer,
                    m_image_buffer_size_bytes,
                    buffer,
                    rows,
-                   cols );
+                   cols,
+                   channels );
 
 }
 

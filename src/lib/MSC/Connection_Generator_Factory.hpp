@@ -29,7 +29,7 @@ class Connection_Generator_Factory
         /**
          * @brief Destructor
         */
-        ~Connection_Generator_Factory();
+        virtual ~Connection_Generator_Factory();
         
 
         /**

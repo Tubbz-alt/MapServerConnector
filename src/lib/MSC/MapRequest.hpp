@@ -204,7 +204,8 @@ class MapResponse
         */
         void Get_Unpacked_Image( char*& buffer,
                                  int&   rows,
-                                 int&   cols );
+                                 int&   cols,
+                                 int&   channels );
 
     private:
         
