@@ -21,6 +21,13 @@ find_package( Boost REQUIRED
 include_directories( ${Boost_INCLUDE_DIRS})
 
 
+#----------------------------------------#
+#-        Find OpenCV Libraries         -#
+#----------------------------------------#
+find_package( OpenCV REQUIRED )
+
+include_directories( ${OpenCV_INCLUDE_DIRS} )
+
 #-------------------------------#
 #-        Header Files         -#
 #-------------------------------#
@@ -55,5 +62,6 @@ add_executable( image-fetcher
 target_link_libraries( image-fetcher
                        MSC
                        ${Boost_LIBRARIES}
+                       ${OpenCV_LIBS}
 )
 

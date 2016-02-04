@@ -5,8 +5,13 @@
 */
 
 // C++ Libraries
+#include <fstream>
 #include <iostream>
 #include <stdexcept>
+
+// OpenCV Libraries
+#include <opencv2/core/core.hpp>
+#include <opencv2/highgui/highgui.hpp>
 
 
 // MapServiceConnector
@@ -61,6 +66,7 @@ int main( int argc, char* argv[] )
     // Add layers
     request.Add_Layer("0");
 
+    
     // Get the requested map
     MSC::MapResponse response = connector->Get_Map( request );
 
@@ -71,13 +77,33 @@ int main( int argc, char* argv[] )
         std::cerr << "Error during the disconnect. Details: " + status.ToString() << std::endl;
     }
 
+
+    // Get the Unpacked Image
+    char* unpacked_image;
+    int   rows;
+    int   cols;
+    response.Get_Unpacked_Image( unpacked_image,
+                                 rows,
+                                 cols );
+
+    cv::Mat image(rows,cols,CV_8UC3);
+    for( int r=0; r<rows; r++ ){
+    for( int c=0; c<cols; c++ ){
+
+    }}
+    
+
     // Finalize MSC
     status = MSC::Finalize();
     BOOST_LOG_TRIVIAL(info) << "Finalizing MSC";
     if( status.Get_Code() != MSC::StatusCode::SUCCESS ){
         std::cerr << "Error during Finalize. Details: " + status.ToString() << std::endl;
     }
+    
 
+
+    // Remote the file
+    response.Finalize();
 
     // Exit
     BOOST_LOG_TRIVIAL(info) << "Shutting down application" << std::endl;

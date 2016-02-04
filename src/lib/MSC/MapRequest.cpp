@@ -6,7 +6,12 @@
 #include "MapRequest.hpp"
 
 // C++ Libraries
+#include <cstring>
 #include <sstream>
+
+// MSC Libraries
+#include "utilities/GDAL_Utilities.hpp"
+#include "utilities/Log_Utilities.hpp"
 
 
 namespace MSC{
@@ -93,7 +98,9 @@ std::string MapRequest::To_ArcGIS_URL()const
 /*        Map Response       */
 /*****************************/
 MapResponse::MapResponse()
- : m_class_name("MapResponse")
+ : m_class_name("MapResponse"),
+   m_image_buffer(nullptr),
+   m_image_buffer_size_bytes(0)
 {
 }
 
@@ -103,10 +110,62 @@ MapResponse::MapResponse()
 /*****************************/
 MapResponse::MapResponse( Status const& status )
  : m_class_name("MapResponse"),
-   m_status(status)
+   m_status(status),
+   m_image_buffer(nullptr),
+   m_image_buffer_size_bytes(0)
 {
 }
 
+
+/*****************************/
+/*        Destructor         */
+/*****************************/
+MapResponse::~MapResponse()
+{
+    // Log Exit
+    BOOST_LOG_TRIVIAL(trace) << "Start of Destructor";
+}
+
+
+/************************************************/
+/*              Assignment Operator             */
+/************************************************/
+MapResponse& MapResponse::operator= (MapResponse const& rhs )
+{
+    // Log
+    BOOST_LOG_TRIVIAL(trace) << "Start of Assignment Operator";
+
+    // Make sure we don't assign ourselves
+    if( this == (&rhs) )
+    {
+        return (*this);
+    }
+
+    // Otherwise, proceed
+    m_status                  = rhs.m_status;
+    m_image_buffer            = rhs.m_image_buffer;
+    m_image_buffer_size_bytes = rhs.m_image_buffer_size_bytes;
+
+
+    return (*this);
+}
+
+/****************************************/
+/*      Finalize the Map Response       */
+/****************************************/
+void MapResponse::Finalize()
+{
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << "Calling Finalize";
+
+    // Delete
+    if( m_image_buffer_size_bytes > 0 )
+    {
+        delete [] m_image_buffer;
+        m_image_buffer = nullptr;
+        m_image_buffer_size_bytes = 0;
+    }
+}
 
 
 /************************************/
@@ -115,6 +174,97 @@ MapResponse::MapResponse( Status const& status )
 void MapResponse::Set_Status( Status const& status )
 {
     m_status = status;
+}
+
+
+/********************************************/
+/*          Set the Image Buffer            */
+/********************************************/
+void MapResponse::Set_Image_Buffer( char*            buffer,
+                                    const uint64_t&  buffer_size_bytes )
+{
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << "Setting the image buffer";
+
+    m_image_buffer            = buffer;
+    m_image_buffer_size_bytes = buffer_size_bytes;
+
+}
+
+
+/**************************************************/
+/*            Append an Image Buffer              */
+/**************************************************/
+void MapResponse::Append_Image_Buffer( char*            buffer,
+                                       const uint64_t&  buffer_size_bytes )
+{
+    // Appending data
+    BOOST_LOG_TRIVIAL(trace) << "Appending " << buffer_size_bytes << " bytes";
+    std::cout << "Current Size: " << m_image_buffer_size_bytes << std::endl;
+
+    
+    // Ignore if the buffer is null or the size is empty
+    if( buffer_size_bytes == 0 ){
+        BOOST_LOG_TRIVIAL(warning) << "Buffer passed is empty";
+        return;
+    }
+
+    // Set the starting position
+    uint64_t start_pos = m_image_buffer_size_bytes;
+    
+    // Check if we need to allocate
+    if( m_image_buffer_size_bytes == 0 ){
+        
+        // Allocate
+        m_image_buffer_size_bytes = buffer_size_bytes;
+        m_image_buffer = new char[m_image_buffer_size_bytes];
+    
+        // Copy
+        memcpy( m_image_buffer, 
+                buffer,
+                m_image_buffer_size_bytes );
+        
+    }
+
+    // Check if we need to re-allocate
+    else
+    {
+        // Allocate Buffer
+        m_image_buffer_size_bytes += buffer_size_bytes;
+        char* new_buffer = new char[m_image_buffer_size_bytes];
+
+        // Copy Original
+        memcpy( new_buffer, 
+                m_image_buffer,
+                start_pos );
+        
+        // Copy New
+        memcpy( new_buffer + start_pos,
+                buffer,
+                buffer_size_bytes );
+        
+        // Clear old buffer
+        delete [] m_image_buffer;
+        m_image_buffer = new_buffer;
+    }
+}
+
+
+/*********************************************/
+/*          Get the Unpacked Image           */
+/*********************************************/
+void MapResponse::Get_Unpacked_Image( char*&  buffer,
+                                      int&    rows,
+                                      int&    cols )
+{
+    
+    // Call on GDAL
+    Decode_Raster( m_image_buffer,
+                   m_image_buffer_size_bytes,
+                   buffer,
+                   rows,
+                   cols );
+
 }
 
 

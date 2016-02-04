@@ -78,12 +78,25 @@ class OGC_Connector : public Base_Connector
 
 
         /**
-         * @brief Static Runner Method
+         * @brief Static runner method for the initialization connection.
+         *
+         * @param[in] ptr
+         * @param[in] size
+         * @param[in] nmemb
+         * @param[in] pInstance
         */
         static size_t Init_Callback_Handler( void* ptr,
                                              size_t size,
                                              size_t nmemb,
                                              void*  pInstance );
+        
+        /**
+         * @brief Static runner method for the Get-Map request
+        */
+        static size_t Get_Map_Callback_Handler( void*   ptr_t,
+                                                size_t  size,
+                                                size_t  nmemb,
+                                                void*   pInstance );
 
         
         /// Class Name
@@ -98,9 +111,12 @@ class OGC_Connector : public Base_Connector
         /// Version Info
         std::string m_wms_version;
 
-        /// Parsed Features / Capabilities
-        std::string m_features;
+        /// Unparsed Features / Capabilities
+        std::string m_features_output;
         
+        /// Latest Request
+        MapResponse  m_latest_response;
+
 }; // End of OGC_Connector Class
 
 

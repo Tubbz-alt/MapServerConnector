@@ -29,6 +29,12 @@ find_package(CURL)
 include_directories(${CURL_INCLUDE_DIRS})
 
 
+#--------------------------#
+#-       Find GDAL        -#
+#--------------------------#
+find_package( GDAL )
+include_directories( ${GDAL_INCLUDE_DIR} )
+
 #------------------------------#
 #-    Project Source Files    -#
 #------------------------------#
@@ -45,6 +51,7 @@ set( LIBRARY_SOURCES
      MSC/esri/ArcGIS_Connector.cpp
      MSC/io/ConfigParser.cpp
      MSC/ogc/OGC_Connector.cpp
+     MSC/utilities/GDAL_Utilities.cpp
      MSC/utilities/Log_Utilities.cpp
 )
 
@@ -66,6 +73,7 @@ set( LIBRARY_HEADERS
      MSC/esri/ArcGIS_Connector.hpp
      MSC/io/ConfigParser.hpp
      MSC/ogc/OGC_Connector.hpp
+     MSC/utilities/GDAL_Utilities.hpp
      MSC/utilities/Log_Utilities.hpp
 )
 
@@ -81,5 +89,6 @@ add_library(MSC SHARED
 target_link_libraries( MSC             
                        ${CURL_LIBRARIES}
                        ${Boost_LIBRARIES}
+                       ${GDAL_LIBRARY} 
 )
 

@@ -7,6 +7,7 @@
 #define __MSC_MAPREQUEST_HPP__
 
 // C++ Libraries
+#include <cinttypes>
 #include <memory>
 #include <string>
 #include <vector>
@@ -133,6 +134,24 @@ class MapResponse
          * @brief Status Constructor
         */
         MapResponse( Status const& status );
+        
+
+        /**
+         * @brief Destructor
+        */
+        ~MapResponse();
+        
+
+        /**
+         * @brief Assignment Operator
+        */
+        MapResponse& operator = ( MapResponse const& response );
+
+
+        /**
+         * @brief Finalize
+        */
+        void Finalize();
 
         
         /**
@@ -147,6 +166,45 @@ class MapResponse
         */
         void Set_Status( Status const& status );
 
+        
+        /**
+         * @brief Set Buffer
+         *
+         * @param[in] buffer
+         * @param[in] buffer_size_bytes
+        */
+        void Set_Image_Buffer( char*           buffer,
+                               const uint64_t& buffer_size_bytes );
+
+        
+        /**
+         * @brief Append Image Data
+        */
+        void Append_Image_Buffer( char*           buffer,
+                                  const uint64_t& buffer_size_bytes );
+        
+        /**
+         * @brief Get the Image Buffer
+        */
+        inline char* Get_Image_Buffer()const{
+            return m_image_buffer;
+        }
+
+
+        /**
+         * @brief Get the Image Buffer Size
+        */
+        inline uint64_t Get_Image_Buffer_Size_Bytes()const{
+            return m_image_buffer_size_bytes;
+        }
+
+
+        /**
+         * @brief Unpack the Image Buffer
+        */
+        void Get_Unpacked_Image( char*& buffer,
+                                 int&   rows,
+                                 int&   cols );
 
     private:
         
@@ -155,6 +213,12 @@ class MapResponse
 
         // Status
         Status m_status;
+
+        /// Buffer
+        char* m_image_buffer;
+
+        /// Image Buffer Size Bytes
+        uint64_t m_image_buffer_size_bytes;
 
 }; // End of MapResponse Class
 

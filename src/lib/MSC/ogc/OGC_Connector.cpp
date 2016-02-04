@@ -100,7 +100,7 @@ void OGC_Connector::Connect( Status& status )
     curl_easy_setopt( m_curl,
                       CURLOPT_WRITEDATA,
                       this );
-    curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1L);
+    //curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1L);
 
     cresult = curl_easy_perform(m_curl);
     
@@ -172,10 +172,6 @@ std::string OGC_Connector::Create_Get_Map_Query( const MapRequest& request )
 }
 
 
-        return num_bytes;
-}
-
-
 /************************************/
 /*          Callback Handler        */
 /************************************/
@@ -196,9 +192,39 @@ size_t OGC_Connector::Init_Callback_Handler( void *ptr,
     char *iter = (char*)ptr;
     char *iterEnd = iter + num_bytes;
 
-    inst->m_features = std::string(iter,iterEnd);
+    inst->m_features_output = std::string(iter,iterEnd);
 
     // Cast the handler
+    return num_bytes;
+}
+
+
+/****************************************/
+/*          Callback Handler            */
+/****************************************/
+size_t  OGC_Connector::Get_Map_Callback_Handler( void*  ptr,
+                                                 size_t size,
+                                                 size_t nmemb,
+                                                 void*  pInstance )
+{
+    // Compute the buffer size
+    size_t num_bytes = size * nmemb;
+
+    // Cast the instance
+    OGC_Connector* inst = static_cast<OGC_Connector*>(pInstance);
+
+    // Create iterators
+    char* iter = (char*)ptr;
+    char* iterEnd = iter + num_bytes;
+
+    // Allocate buffer
+    char* buffer = (char*)ptr;
+    
+
+    // Push to the features
+    inst->m_latest_response.Append_Image_Buffer( buffer,
+                                                 num_bytes );
+    
     return num_bytes;
 }
 
@@ -208,8 +234,10 @@ size_t OGC_Connector::Init_Callback_Handler( void *ptr,
 /**********************************/
 MapResponse OGC_Connector::Get_Map( MapRequest const& request )
 {
+    // Log Entry
+    BOOST_LOG_TRIVIAL(debug) << "Start of Get_Map Request.";
+
     // Create response
-    MapResponse response;
     CURLcode cresult;
 
     // Create URL
@@ -225,20 +253,22 @@ MapResponse OGC_Connector::Get_Map( MapRequest const& request )
     // Create callbacks and data
     curl_easy_setopt( m_curl, 
                       CURLOPT_WRITEFUNCTION, 
-                      &OGC_Connector::Callback_Handler );
+                      &OGC_Connector::Get_Map_Callback_Handler );
     curl_easy_setopt( m_curl,
                       CURLOPT_WRITEDATA,
                       this );
-    curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1L);
+    //curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1L);
 
     cresult = curl_easy_perform(m_curl);
 
-
     // Request
-    response.Set_Status(Status(StatusCode::NOT_IMPLEMENTED_YET));
+    m_latest_response.Set_Status(Status(StatusCode::NOT_IMPLEMENTED_YET));
+    
+    // Log Entry
+    BOOST_LOG_TRIVIAL(debug) << "End of Get_Map Request.";
 
     // Return response
-    return response;
+    return m_latest_response;
 }
 
 

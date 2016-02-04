@@ -12,6 +12,9 @@
 #include "ogc/OGC_Connector.hpp"
 #include "utilities/Log_Utilities.hpp"
 
+// GDAL Libraries
+#include <gdal.h>
+#include <gdal_priv.h>
 
 // C++ Libraries
 #include <memory>
@@ -48,7 +51,9 @@ Status Initialize( Configuration const& configuration )
         return status;
     }
     
-    
+    // Initialize GDAL
+    GDALAllRegister();
+
     // Log Exit
     BOOST_LOG_TRIVIAL(trace) << __func__ << ", End of Method";
 

@@ -83,23 +83,23 @@ void ArcGIS_Connector::Connect( Status& status )
     
 
     // Construct URL
-    std::string url = Create_Get_Capabilities_Query();
-    BOOST_LOG_TRIVIAL(debug) << CLASS_LOG << ", Constructing Feature Query: " << url;
-    curl_easy_setopt( m_curl,
-                      CURLOPT_URL,
-                      url.c_str());
+    //std::string url = Create_Get_Capabilities_Query();
+    //BOOST_LOG_TRIVIAL(debug) << CLASS_LOG << ", Constructing Feature Query: " << url;
+    //curl_easy_setopt( m_curl,
+    //                  CURLOPT_URL,
+    //                  url.c_str());
     
     
     // Create callbacks and data
-    curl_easy_setopt( m_curl, 
-                      CURLOPT_WRITEFUNCTION, 
-                      &OGC_Connector::Callback_Handler );
-    curl_easy_setopt( m_curl,
-                      CURLOPT_WRITEDATA,
-                      this );
-    curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1L);
+    //curl_easy_setopt( m_curl, 
+    //                  CURLOPT_WRITEFUNCTION, 
+    //                  &ArOGC_Connector::Callback_Handler );
+    //curl_easy_setopt( m_curl,
+    //                  CURLOPT_WRITEDATA,
+    //                  this );
+    //curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1L);
 
-    cresult = curl_easy_perform(m_curl);
+    //cresult = curl_easy_perform(m_curl);
     
 
     /*
