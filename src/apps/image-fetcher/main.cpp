@@ -61,7 +61,7 @@ int main( int argc, char* argv[] )
                              39,
                              -119,
                              40,
-                             "image/png");
+                             MSC::ImageType::PNG );
     
     // Add layers
     request.Add_Layer("0");
