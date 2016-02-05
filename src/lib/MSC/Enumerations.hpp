@@ -23,6 +23,7 @@ enum class ImageType : int8_t
     PNG     = 1 /**< Portable Network Graphic*/,
     JPEG    = 2,
     TIFF    = 3,
+    GIF     = 4,
 }; // End of ImageType Enumerations
 
 

@@ -109,7 +109,7 @@ class MapRequest
         double m_bbox_max_y;
 
         /// Format
-        std::string m_format;
+        ImageType m_format;
 
 }; // End of MapRequest
 

@@ -29,6 +29,11 @@ std::string ImageTypeToString( ImageType const& tp )
         return "TIFF";
     }
 
+    // GIF
+    if( tp == ImageType::GIF ){
+        return "GIF";
+    }
+
     // Unknown
     return "UNKNOWN";
 }
@@ -58,6 +63,12 @@ ImageType  StringToImageType( const std::string& tp )
         return ImageType::TIFF;
     }
 
+    // GIF
+    if( tp == "gif" || tp == "GIF" )
+    {
+        return ImageType::GIF;
+    }
+
     // Unknown
     return ImageType::UNKNOWN;
 }
@@ -78,7 +89,13 @@ std::string ImageTypeToWMSFormat( const ImageType& format )
         // JPEG
         case ImageType::JPEG:
             return "image/jpeg";
+        
+        // GIF
+        case ImageType::GIF:
+            return "image/gif";
 
+        // Remainders
+        case ImageType::TIFF:
         default:
             return "";
     }
