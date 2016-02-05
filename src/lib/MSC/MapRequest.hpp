@@ -13,6 +13,7 @@
 #include <vector>
 
 // MSC Libraries
+#include "Enumerations.hpp"
 #include "Status.hpp"
 
 
@@ -36,14 +37,14 @@ class MapRequest
          * @param[in] image_rows  Number of image rows.
          * @param[in] srs         Geographic Coordinate System.        
          */
-        MapRequest( const int& image_cols,
-                    const int& image_rows,
+        MapRequest( const int&          image_cols,
+                    const int&          image_rows,
                     const std::string&  crs,
-                    const double& bbox_min_x,
-                    const double& bbox_min_y,
-                    const double& bbox_max_x,
-                    const double& bbox_max_y,
-                    const std::string& format );
+                    const double&       bbox_min_x,
+                    const double&       bbox_min_y,
+                    const double&       bbox_max_x,
+                    const double&       bbox_max_y,
+                    const ImageType&    format );
         
 
         /**

@@ -27,7 +27,7 @@ MapRequest::MapRequest( const int&         image_cols,
                         const double&      bbox_min_y,
                         const double&      bbox_max_x,
                         const double&      bbox_max_y,
-                        const std::string& format )
+                        const ImageType&   format )
  : m_class_name("MapRequest"),
    m_image_cols(image_cols),
    m_image_rows(image_rows),
@@ -58,7 +58,7 @@ std::string MapRequest::To_WMS_URL()const
     sin << "&HEIGHT=" << m_image_rows;
 
     // Add the format
-    sin << "&FORMAT=" << m_format;
+    sin << "&FORMAT=" << ImageTypeToWMSFormat(m_format);
 
     // Iterate over layers
     sin << "&Layers=";
