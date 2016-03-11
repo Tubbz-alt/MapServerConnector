@@ -87,6 +87,7 @@ add_executable( msc-unit-tests
 target_link_libraries( msc-unit-tests
                        MSC
                        ${Boost_LIBRARIES}
+                       pthread
 )
 
 

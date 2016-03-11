@@ -5,6 +5,12 @@
 #    Purpose: Construct MapServiceConnector Test Applications
 #
 
+
+#---------------------------------------------#
+#-      Build the MSC Viewer Application     -#
+#---------------------------------------------#
+add_subdirectory(msc-viewer)
+
 #---------------------------------------------#
 #-      Build Image Fetcher Application      -#
 #---------------------------------------------#

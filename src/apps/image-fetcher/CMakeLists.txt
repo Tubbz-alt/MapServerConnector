@@ -61,6 +61,7 @@ add_executable( image-fetcher
 #-------------------------------------------#
 target_link_libraries( image-fetcher
                        MSC
+                       pthread
                        ${Boost_LIBRARIES}
                        ${OpenCV_LIBS}
 )

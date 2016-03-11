@@ -20,7 +20,7 @@
 namespace MSC{
 
 /**
- * @brief MapRequest
+ * @class MapRequest
 */
 class MapRequest
 {
