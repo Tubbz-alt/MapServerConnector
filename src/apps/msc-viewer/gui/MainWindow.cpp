@@ -46,8 +46,14 @@ void MainWindow::keyPressEvent( QKeyEvent* event )
 /**********************************************/
 void MainWindow::Build_Dock_Windows()
 {
+    // Viewer Window
+    m_viewer_dock = new QDockWidget( tr("Map Data"), this ); 
+    m_viewer_dock->setWidget(new MapViewerWidget( m_options, this )); 
+    this->addDockWidget( Qt::LeftDockWidgetArea, m_viewer_dock );
 
-
-
+    // Toolbar Widget
+    m_toolbar_dock = new QDockWidget( tr("Toolbar"), this );
+    m_toolbar_dock->setWidget(new ToolbarWidget( m_options, this ));
+    this->addDockWidget( Qt::RightDockWidgetArea, m_toolbar_dock );
 }
 

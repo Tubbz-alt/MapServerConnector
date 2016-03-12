@@ -8,6 +8,7 @@
 // MSC Libraries
 #include "log/LogHandler.hpp"
 #include "utils/FilePath.hpp"
+#include "utils/String_Utilities.hpp"
 
 
 // C++ Libraries
@@ -39,11 +40,11 @@ Options::Options( int argc, char* argv[] )
 
     
     // Load Configuration File
-    Load_Configuration_File();
+    FilePath config_path = FilePath(m_gui_config_settings["MSC_HOME"]) / FilePath("options.cfg");
+    Load_Configuration_File(config_path);
 
 
     // Print the MSC Home
-    LOG_MSG( LogLevel::DEBUG ) << "Loading Configuration file at " << m_gui_config_settings["MSC_HOME"];
 
 
     // Load Services
@@ -135,17 +136,84 @@ void Options::Check_Configuration_Directory()
             LOG_MSG(LogLevel::ERROR) << "Unable to Create Directory (" << config_dir.ToString() << ")";
         }
     }
+    
 
+    // Check the Configuration File
+    FilePath config_file_path = config_dir / FilePath("options.cfg");
+    if( !config_file_path.Exists() )
+    {
+        // Generate the Config File
+        Generate_Configuration_File( config_file_path );
+    }
 
+    // check the services directory
+    FilePath services_path = config_dir / FilePath("services");
+    if( !services_path.Exists() || !services_path.Is_Directory() ){
+        LOG_MSG(LogLevel::INFO) << "Creating Services Directory: " << services_path.ToString();
+        if( !services_path.Create_Directory() ){
+            LOG_MSG(LogLevel::ERROR) << "Unable to create service directory: " << services_path.ToString();
+        }
+    }
 
 }
 
 
+/************************************************/
+/*        Generate the Configuration File       */
+/************************************************/
+void Options::Generate_Configuration_File( const FilePath& config_path )
+{
+    // Open the File
+    std::ofstream fout;
+    fout.open(config_path.ToString().c_str());
+
+    // Write the GUI Configuration
+    fout << std::endl;
+    fout << "GUI_TITLE=Map Service Connector Viewer" << std::endl;
+    fout << std::endl;
+
+    // Close the File
+    fout.close();
+
+}
+
 /***********************************************/
 /*          Load the Configuration File        */
 /***********************************************/
-void Options::Load_Configuration_File()
+void Options::Load_Configuration_File( const FilePath& config_path )
 {
+
+    // open the file
+    std::ifstream fin;
+    fin.open( config_path.ToString().c_str());
+
+    // read the first line
+    std::string line;
+    std::getline( fin, line);
+
+    // split the string
+    std::vector<std::string> components = String_Split(line,"="); 
+    
+    // pass components to set function
+    if( components.size() > 1 ){
+        m_gui_config_settings[components[0]] = components[1];
+    }
+
+    // iterate until empty
+    while( !fin.eof() )
+    {
+        // grab the next line
+        std::getline( fin, line);
+        std::vector<std::string> components = String_Split(line,"="); 
+
+        // set the item        
+        if( components.size() > 1 ){
+            m_gui_config_settings[components[0]] = components[1];
+        }
+    }
+
+    // close the file
+    fin.close();
 
 }
 
@@ -155,7 +223,7 @@ void Options::Load_Configuration_File()
 /****************************************/
 void Options::Load_Map_Services()
 {
-
+    // Get a list of service config files in the services directory
 
 }
 

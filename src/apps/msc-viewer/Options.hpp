@@ -14,6 +14,7 @@
 
 // MSC Viewer Libraries
 #include "log/LogHandler.hpp"
+#include "utils/FilePath.hpp"
 
 
 // MSC Library
@@ -96,7 +97,13 @@ class Options
         /**
          * @brief Load Configuration Files
          */
-        void Load_Configuration_File();
+        void Load_Configuration_File( const FilePath& config_path );
+
+
+        /**
+         * @brief Generate a Configuration File
+        */
+        void Generate_Configuration_File( const FilePath& config_path );
 
 
         /**

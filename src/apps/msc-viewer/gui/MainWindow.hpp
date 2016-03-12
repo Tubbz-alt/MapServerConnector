@@ -13,9 +13,10 @@
 #include <QtGui>
 
 
-// Pair Matcher Libraries
+// MSC-Viewer
 #include "../Options.hpp"
-
+#include "MapViewerWidget.hpp"
+#include "ToolbarWidget.hpp"
 
 /**
  * @class MainWindow

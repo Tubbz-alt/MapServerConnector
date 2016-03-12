@@ -33,7 +33,8 @@ include_directories( ${OpenCV_INCLUDES} )
 #-------------------#
 #-    Find Boost   -#
 #-------------------#
-set( Boost_USE_STATIC_LIBS ON )
+set( Boost_USE_STATIC_LIBS OFF )
+set( Boost_USE_MULTITHREADED ON )
 find_package(Boost REQUIRED
                 COMPONENTS
                 system
@@ -69,10 +70,16 @@ set( MSC_VIEWER_SOURCES
     Options.hpp
     gui/MainWindow.cpp
     gui/MainWindow.hpp
+    gui/MapViewerWidget.cpp
+    gui/MapViewerWidget.hpp
+    gui/ToolbarWidget.cpp
+    gui/ToolbarWidget.hpp
     log/LogHandler.cpp
     log/LogHandler.hpp
     utils/FilePath.cpp
     utils/FilePath.hpp
+    utils/String_Utilities.cpp
+    utils/String_Utilities.hpp
 )
 
 
