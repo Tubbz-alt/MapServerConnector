@@ -10,6 +10,8 @@
 #include <QtGui>
 #include <QComboBox>
 #include <QLabel>
+#include <QLineEdit>
+#include <QPushButton>
 #include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -51,6 +53,12 @@ class AddServiceWidget : public QWidget
          * @brief Build Selector Widget
         */
         void Build_Selector_Widget();
+
+
+        /**
+         * @brief Build Import Widget
+        */
+        void Build_Import_Widget();
         
 
         /// Options

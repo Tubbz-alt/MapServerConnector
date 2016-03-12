@@ -98,11 +98,9 @@ void AddServiceWidget::Build_Selector_Widget()
     // Create the Stack Widget
     m_stack_widget = new QStackedWidget();
     
-    // Add the Import Widget
-    m_import_widget = new QWidget();
-    m_import_layout = new QVBoxLayout();
-    m_import_widget->setLayout(m_import_layout);
-    m_stack_widget->addWidget(m_import_widget);
+    
+    // Build the Import Widget
+    Build_Import_Widget();
     
     // Add the Define Widget
     m_define_widget = new QWidget();
@@ -120,5 +118,52 @@ void AddServiceWidget::Build_Selector_Widget()
 
     // add to main layout
     m_main_layout->addWidget( m_stack_widget );
+}
+
+
+/*********************************************/
+/*          Build the Import Widget          */
+/*********************************************/
+void AddServiceWidget::Build_Import_Widget()
+{
+    // Add the Import Widget
+    m_import_widget = new QWidget();
+    
+    // Add the Import Layout 
+    m_import_layout = new QVBoxLayout();
+    m_import_layout->setAlignment( Qt::AlignTop );
+
+    // Create the title widget
+    m_import_title_widget = new QWidget(m_import_widget);
+    m_import_title_layout = new QHBoxLayout();
+    m_import_title_layout->setAlignment(Qt::AlignLeft);
+    m_import_title_widget->setLayout(m_import_title_layout);
+    m_import_layout->addWidget(m_import_title_widget);
+
+    m_import_title_label = new QLabel("Import Map Service File.");
+    m_import_title_layout->addWidget(m_import_title_label);
+    
+    // Create the Path Widget
+    QWidget*      import_path_widget = new QWidget(m_import_widget);
+    QHBoxLayout*  import_path_layout = new QHBoxLayout();
+    import_path_layout->setAlignment(Qt::AlignLeft);
+
+    QLabel* import_path_label = new QLabel("Path", import_path_widget);
+    import_path_layout->addWidget(import_path_label);
+    
+    QLineEdit* import_path_edit = new QLineEdit(import_path_widget);
+    import_path_layout->addWidget(import_path_edit);
+
+    QPushButton* import_path_button = new QPushButton("Select", import_path_widget);
+    import_path_layout->addWidget(import_path_button);
+    import_path_widget->setLayout(import_path_layout);
+
+    m_import_layout->addWidget(import_path_widget);
+
+    // Set the Main Layout
+    m_import_widget->setLayout(m_import_layout);
+
+    // Add to the Stack Widget
+    m_stack_widget->addWidget(m_import_widget);
 }
 
