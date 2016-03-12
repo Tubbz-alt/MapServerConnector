@@ -9,10 +9,15 @@
 
 // Qt Libraries
 #include <QtGui>
+#include <QTabWidget>
+#include <QVBoxLayout>
 #include <QWidget>
+
 
 // MSC Viewer Libraries
 #include "../Options.hpp"
+#include "AddServiceWidget.hpp"
+#include "ServiceListWidget.hpp"
 
 /**
  * @class ToolbarWidget
@@ -37,6 +42,12 @@ class ToolbarWidget : public QWidget
         
         /// Configuration Options
         Options::ptr_t m_options;
+
+        /// Tabbed Widget
+        QTabWidget* m_tab_widget;
+
+        /// Layout
+        QVBoxLayout* m_layout;
 
 }; // End of ToolbarWidget Class
 

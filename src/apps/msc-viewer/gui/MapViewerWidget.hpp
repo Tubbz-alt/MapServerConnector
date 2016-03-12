@@ -8,6 +8,9 @@
 
 // Qt Libraries
 #include <QtGui>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QVBoxLayout>
 #include <QWidget>
 
 // MSC Viewer Libraries
@@ -28,11 +31,30 @@ class MapViewerWidget : public QWidget
         MapViewerWidget( Options::ptr_t options,
                          QWidget*       parent );
 
+    
+        /**
+         * @brief Detect Keyboard Actions.
+        */
+        void keyPressEvent( QKeyEvent* key_event ); 
         
+        /**
+         * @brief Event Filter
+        */
+        bool eventFilter(QObject *obj, QEvent *event);
+       
     private:
         
         /// Configuration Options
         Options::ptr_t m_options;
+
+        /// Graphics View
+        QGraphicsView* m_graphics_view;
+
+        /// Graphics Scene
+        QGraphicsScene* m_graphics_scene;
+
+        /// Layout
+        QVBoxLayout* m_layout;
 
 }; // End of MapViewerWidget Class
 

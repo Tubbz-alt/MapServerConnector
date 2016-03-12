@@ -68,10 +68,14 @@ set( MSC_VIEWER_SOURCES
     msc-viewer.cpp
     Options.cpp
     Options.hpp
+    gui/AddServiceWidget.cpp
+    gui/AddServiceWidget.hpp
     gui/MainWindow.cpp
     gui/MainWindow.hpp
     gui/MapViewerWidget.cpp
     gui/MapViewerWidget.hpp
+    gui/ServiceListWidget.cpp
+    gui/ServiceListWidget.hpp
     gui/ToolbarWidget.cpp
     gui/ToolbarWidget.hpp
     log/LogHandler.cpp
