@@ -45,6 +45,12 @@ class MainWindow : public QMainWindow
     private:
         
         /**
+         * @brief Event for Closing.
+        */
+        void closeEvent( QCloseEvent* event );
+
+
+        /**
          * @brief Build Dock Widgets
         */
         void Build_Dock_Windows();

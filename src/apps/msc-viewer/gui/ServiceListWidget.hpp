@@ -8,10 +8,16 @@
 
 // Qt Libraries
 #include <QtGui>
+#include <QHBoxLayout>
+#include <QLabel>
+#include <QTableView>
+#include <QVBoxLayout>
 #include <QWidget>
+
 
 // MSC Viewer Libraries
 #include "../Options.hpp"
+
 
 /**
  * @class ServiceListWidget
@@ -29,10 +35,40 @@ class ServiceListWidget : public QWidget
                            QWidget*       parent = NULL );
 
     
+    public slots:
+        
+        /**
+         * @brief Update the Service Table
+        */
+        void Update_Service_Table();
+
     private:
+
+        /**
+         * @brief Build the Title Widget
+        */
+        void Build_Title_Widget();
+
+
+        /**
+         * @brief Build the Table Widget
+        */
+        void Build_Table_Widget();
+
         
         /// Options
         Options::ptr_t m_options;
+
+        /// Main Layout
+        QVBoxLayout* m_main_layout;
+
+        /// Title Widget
+        QWidget*     m_title_widget;
+        QHBoxLayout* m_title_layout;
+        QLabel*      m_title_label;
+
+        /// List Widget
+        QTableView* m_table_widget;
 
 }; // End of ServiceListWidget Class
 

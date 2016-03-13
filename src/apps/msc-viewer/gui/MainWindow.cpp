@@ -57,3 +57,20 @@ void MainWindow::Build_Dock_Windows()
     this->addDockWidget( Qt::RightDockWidgetArea, m_toolbar_dock );
 }
 
+
+/***********************************/
+/*          Close the GUI          */
+/***********************************/
+void MainWindow::closeEvent( QCloseEvent* close_event )
+{
+    // Log Entry
+    LOG_MSG( LogLevel::TRACE ) << "Start of MainWindow::closeEvent.";
+
+    // Close and finalize all MSC Services
+    m_options->Close_Map_Services();
+    
+    // Log Exit
+    LOG_MSG( LogLevel::TRACE ) << "End of MainWindow::closeEvent.";
+}
+
+

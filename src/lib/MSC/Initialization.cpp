@@ -69,6 +69,9 @@ Status Initialize( Configuration const& configuration )
 /************************************************/
 Status Finalize( )
 {
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << __func__ << ", Start of Method.";
+
     // Clear the Factory
     Status status = Connection_Generator_Factory::Finalize();
 

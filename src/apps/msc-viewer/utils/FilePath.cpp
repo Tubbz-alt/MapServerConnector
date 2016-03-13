@@ -133,6 +133,14 @@ bool FilePath::operator==( const FilePath& path )const{
 }
 
 
+/***************************************/
+/*          Less-Than Operator         */
+/***************************************/
+bool FilePath::operator < ( const FilePath& path )const{
+    return (m_pathname < path.m_pathname);
+}
+
+
 /************************************************************/
 /*          Get the Contents of the Subdirectory            */
 /************************************************************/

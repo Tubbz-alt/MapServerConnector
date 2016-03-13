@@ -102,7 +102,12 @@ class FilePath
          * @brief Comparison Operator
          */
         bool operator == ( const FilePath& other )const;
+        
 
+        /**
+         * @brief Less-Than Operator
+        */
+        bool operator < ( const FilePath& other ) const;
 
         /**
          * @brief List Contents

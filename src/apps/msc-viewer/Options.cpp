@@ -83,6 +83,28 @@ std::string Options::Get_GUI_Config_Parameter( const std::string& key,
 }
 
 
+/*********************************************/
+/*          Close all map services           */
+/*********************************************/
+void Options::Close_Map_Services()
+{
+    // Log
+    LOG_MSG(LogLevel::INFO) << "Closing Map-Services.";
+
+    // Iterate over connectors
+    MSC::Status msc_status;
+    for( auto it=m_map_services.begin(); it != m_map_services.end(); it++ )
+    {
+        it->second->Disconnect( msc_status );
+    }
+    m_map_services.clear();
+    
+    // Finalize MSC
+    MSC::Finalize();
+
+}
+
+
 /**********************************************/
 /*          Load Default Settings             */
 /**********************************************/
@@ -166,9 +188,16 @@ void Options::Generate_Configuration_File( const FilePath& config_path )
     // Open the File
     std::ofstream fout;
     fout.open(config_path.ToString().c_str());
+    fout << std::endl;
+    
+    
+    // Write the Program Configuration
+    fout << "#  Program Configuration Information" << std::endl;
+    fout << "SERVICES_REGEX_PATTERN=.*\\.cfg" << std::endl;
+    fout << std::endl;
 
     // Write the GUI Configuration
-    fout << std::endl;
+    fout << "#  GUI Configuration Information" << std::endl;
     fout << "GUI_TITLE=Map Service Connector Viewer" << std::endl;
     fout << std::endl;
 
@@ -223,7 +252,45 @@ void Options::Load_Configuration_File( const FilePath& config_path )
 /****************************************/
 void Options::Load_Map_Services()
 {
+    // MSC Variables
+    MSC::Status msc_status;
+    
+    // Define the services directory
+    FilePath config_dir(m_gui_config_settings["MSC_HOME"]);
+    FilePath services_dir = config_dir / FilePath("services");
+    
+    std::string services_regex_pattern = m_gui_config_settings["SERVICES_REGEX_PATTERN"];
+
     // Get a list of service config files in the services directory
+    std::vector<FilePath> service_files = services_dir.Get_Contents(services_regex_pattern);
+    
+    // Print the services list
+    LOG_MSG(LogLevel::INFO) << "Detected " << service_files.size() << " service files.";
+    for( size_t i=0; i<service_files.size(); i++ )
+    {
+        LOG_MSG(LogLevel::INFO) << " - " << service_files[i];
+
+        // Check if already added
+        if( m_map_services.find(service_files[i]) != m_map_services.end() ){
+            LOG_MSG(LogLevel::INFO) << " Already added.";
+        }
+
+        // Add otherwise
+        else{
+            // Create MSC
+            auto connector = MSC::MapServiceConnectorFactory::Create( service_files[i].ToString(), msc_status );
+
+            // check connector status for errors
+            if( connector == nullptr || msc_status.Get_Code() != MSC::StatusCode::SUCCESS ){
+                LOG_MSG(LogLevel::ERROR) << "Unable to Create Map-Service-Connector. Details: " << msc_status.ToString();
+            }
+
+            // Add to service list
+            else{
+                m_map_services[service_files[i]] = connector;
+            }
+        }
+    }
 
 }
 

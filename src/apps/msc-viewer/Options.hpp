@@ -46,7 +46,7 @@ class Options
          *
          * @preturn Map of services with their ID as the key.
          */
-        inline std::map<int32_t, MSC::MapServiceConnector::ptr_t> Get_Map_Services()const{
+        inline std::map<FilePath, MSC::MapServiceConnector::ptr_t> Get_Map_Services()const{
             return m_map_services;
         }
 
@@ -72,6 +72,12 @@ class Options
          */
         std::string Get_GUI_Config_Parameter( const std::string& key, 
                                               const std::string& default_value )const;
+        
+
+        /**
+         * @brief Close map services.
+        */
+        void Close_Map_Services();
 
 
     private:
@@ -119,7 +125,8 @@ class Options
         std::map<std::string,std::string> m_gui_config_settings;
         
         /// List of Map Services
-        std::map<int32_t, MSC::MapServiceConnector::ptr_t> m_map_services;
+        std::map<FilePath, MSC::MapServiceConnector::ptr_t> m_map_services;
+
 
 }; // End of Options Class
 
