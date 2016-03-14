@@ -63,6 +63,14 @@ class OGC_Connector : public Base_Connector
         */
         virtual MapResponse Get_Map( MapRequest const& request );
 
+        
+        /**
+         * @brief Get Driver Name
+         */
+        inline virtual std::string Get_Driver_Name()const{
+            return "ogc";
+        }
+
     private:
         
         /**

@@ -61,9 +61,19 @@ void ServiceListWidget::Build_Title_Widget()
 /*******************************************/
 void ServiceListWidget::Build_Table_Widget()
 {
+
+    // Build the Header Items
+    QStringList label_list;
+    label_list.push_back("Select");
+    label_list.push_back("File Path");
+    label_list.push_back("Driver");
+    label_list.push_back("Connection State");
+    label_list.push_back("Protocol");
+
     // Build the Table Widget
-    m_table_widget = new QTableView(this);
-    
+    m_table_widget = new QTableWidget(0, label_list.size(), this);
+    m_table_widget->setHorizontalHeaderLabels( label_list );
+
     // Update the table
     Update_Service_Table();
 
@@ -79,7 +89,41 @@ void ServiceListWidget::Update_Service_Table()
     // Get a list of all services
     std::map<FilePath,MSC::MapServiceConnector::ptr_t> service_list = m_options->Get_Map_Services();
 
-    // Check against current list
+    // Resize the table
+    m_table_widget->setRowCount( service_list.size() );
+
+    // Add each column
+    int row = 0;
+    for( auto it=service_list.begin(); it != service_list.end(); it++, row++ )
+    {
+        // Set the Checkbox Field
+        QTableWidgetItem* checkItem = new QTableWidgetItem();
+        checkItem->setCheckState( Qt::Unchecked );
+        m_table_widget->setItem( row, 0, checkItem );
+
+
+        // Set the Path
+        m_table_widget->setItem(row, 1, new QTableWidgetItem( it->first.Get_Basename().ToString().c_str())); 
+        
+        // Set the Driver
+        m_table_widget->setItem(row, 2, new QTableWidgetItem( it->second->Get_Connector_Impl()->Get_Driver_Name().c_str() ));
+        
+
+        // Set the Connection State
+        QTableWidgetItem*  conn_state = new QTableWidgetItem();
+        QTableWidgetItem*  proto_item = new QTableWidgetItem("Unknown");
+        if( it->second->Is_Connected() ){
+            conn_state->setText("Connected");
+            conn_state->setBackground(QBrush(QColor(100,255,100)));
+        }
+        else{
+            conn_state->setText("Disconnected");
+            conn_state->setBackground(QBrush(QColor(255,100,100)));
+        }
+        m_table_widget->setItem( row, 3, conn_state );
+        m_table_widget->setItem( row, 4, proto_item );
+
+    }
 
 }
 

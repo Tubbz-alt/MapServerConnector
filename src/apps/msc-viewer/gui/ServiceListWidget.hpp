@@ -10,7 +10,7 @@
 #include <QtGui>
 #include <QHBoxLayout>
 #include <QLabel>
-#include <QTableView>
+#include <QTableWidget>
 #include <QVBoxLayout>
 #include <QWidget>
 
@@ -68,8 +68,12 @@ class ServiceListWidget : public QWidget
         QLabel*      m_title_label;
 
         /// List Widget
-        QTableView* m_table_widget;
+        QTableWidget* m_table_widget;
 
+
+        /// Service Status Widget
+        QWidget*   m_status_widget;
+        
 }; // End of ServiceListWidget Class
 
 #endif

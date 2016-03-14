@@ -62,6 +62,13 @@ class Base_Connector
         virtual MapResponse Get_Map( MapRequest const& request ) = 0;
 
 
+        /**
+         * @brief Get Driver Name
+         */
+        inline virtual std::string Get_Driver_Name()const{
+            return "base";
+        }
+
     protected:
         
         /// Connection Status

@@ -64,7 +64,14 @@ class MapServiceConnector
          * @brief Get the requested map
         */
         MapResponse Get_Map( MapRequest const& request );
+        
 
+        /**
+         * @brief Get the Active Driver Name
+         */
+        inline virtual Base_Connector::ptr_t Get_Connector_Impl(){
+            return m_connection_manager;
+        }
 
     private:
         
