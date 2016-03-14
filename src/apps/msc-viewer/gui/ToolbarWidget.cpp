@@ -24,6 +24,9 @@ ToolbarWidget::ToolbarWidget( Options::ptr_t options,
 
     
     // Create various sub-widgets
+    ViewerStatusWidget* viewerStatusWidget = new ViewerStatusWidget( m_options );
+    m_tab_widget->addTab( viewerStatusWidget, "Viewer Options");
+
     ServiceListWidget* serviceListWidget = new ServiceListWidget( m_options );
     m_tab_widget->addTab( serviceListWidget, "Services" );
 

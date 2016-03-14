@@ -42,6 +42,14 @@ class Options
         
 
         /**
+         * @brief Get the Current Projection
+        */
+        inline std::string Get_Current_Projection()const{
+            return m_current_projection;
+        }
+
+
+        /**
          * @brief Get the list of Map Services.
          *
          * @preturn Map of services with their ID as the key.
@@ -126,7 +134,9 @@ class Options
         
         /// List of Map Services
         std::map<FilePath, MSC::MapServiceConnector::ptr_t> m_map_services;
-
+    
+        /// Current Viewer Projection
+        std::string m_current_projection;
 
 }; // End of Options Class
 

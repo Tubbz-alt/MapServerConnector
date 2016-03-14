@@ -54,6 +54,12 @@ class ServiceListWidget : public QWidget
          * @brief Build the Table Widget
         */
         void Build_Table_Widget();
+        
+
+        /**
+         * @brief Build Status Widget
+        */
+        void Build_Status_Widget();
 
         
         /// Options
@@ -72,7 +78,9 @@ class ServiceListWidget : public QWidget
 
 
         /// Service Status Widget
-        QWidget*   m_status_widget;
+        QWidget*      m_status_widget;
+        QVBoxLayout*  m_status_layout;
+
         
 }; // End of ServiceListWidget Class
 

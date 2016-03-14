@@ -125,6 +125,9 @@ void Options::Load_Default_Settings()
     // Set the Default Log Level
     m_gui_config_settings["LOG_MIN_SEVERITY"] = "INFO";
 
+    // Set the Default Projection
+    m_gui_config_settings["SERVICES_DEFAULT_PROJECTION"] = "EPSG:4326";
+    m_current_projection = "EPSG:4326";
 
 }
 
@@ -192,9 +195,11 @@ void Options::Generate_Configuration_File( const FilePath& config_path )
     
     
     // Write the Program Configuration
-    fout << "#  Program Configuration Information" << std::endl;
+    fout << "#  Map-Services Configuration Information" << std::endl;
     fout << "SERVICES_REGEX_PATTERN=.*\\.cfg" << std::endl;
+    fout << "SERVICES_DEFAULT_PROJECTION=EPSG:4326" << std::endl;
     fout << std::endl;
+
 
     // Write the GUI Configuration
     fout << "#  GUI Configuration Information" << std::endl;

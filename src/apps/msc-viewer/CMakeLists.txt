@@ -78,6 +78,8 @@ set( MSC_VIEWER_SOURCES
     gui/ServiceListWidget.hpp
     gui/ToolbarWidget.cpp
     gui/ToolbarWidget.hpp
+    gui/ViewerStatusWidget.cpp
+    gui/ViewerStatusWidget.hpp
     log/LogHandler.cpp
     log/LogHandler.hpp
     utils/FilePath.cpp

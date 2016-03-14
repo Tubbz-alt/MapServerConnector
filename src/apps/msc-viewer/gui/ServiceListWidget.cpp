@@ -81,6 +81,30 @@ void ServiceListWidget::Build_Table_Widget()
     m_main_layout->addWidget( m_table_widget );
 }
 
+
+/**********************************************/
+/*          Build the Status Widget           */
+/**********************************************/
+void ServiceListWidget::Build_Status_Widget()
+{
+
+    //  Create the Widget
+    m_status_widget = new QWidget(this);
+
+    // Create the layout
+    m_status_layout = new QVBoxLayout();
+
+
+
+    // Set the layout
+    m_status_widget->setLayout(m_status_layout);
+
+    // Add to main widget
+    m_main_layout->addWidget(m_status_widget);
+
+}
+
+
 /*********************************************/
 /*          Update the Service Table         */
 /*********************************************/

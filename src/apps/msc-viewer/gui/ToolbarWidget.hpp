@@ -18,6 +18,8 @@
 #include "../Options.hpp"
 #include "AddServiceWidget.hpp"
 #include "ServiceListWidget.hpp"
+#include "ViewerStatusWidget.hpp"
+
 
 /**
  * @class ToolbarWidget
