@@ -48,6 +48,7 @@ void ViewerStatusWidget::Build_Title_Widget()
     
     // Create the label
     m_title_label = new QLabel("Viewer Configuration");
+    m_title_label->setFont(m_options->Get_GUI_Font("GUI_H1_FONT"));
     m_title_layout->addWidget(m_title_label);
 
 
@@ -70,6 +71,7 @@ void ViewerStatusWidget::Build_Proj_Widget()
 
     // Create Label
     m_proj_label = new QLabel("Projection Configuration");
+    m_proj_label->setFont(m_options->Get_GUI_Font("GUI_H2_FONT"));
     m_proj_layout->addWidget(m_proj_label);
 
     // Create the Current Projection Widget
@@ -80,6 +82,7 @@ void ViewerStatusWidget::Build_Proj_Widget()
     m_proj_current_layout->setAlignment(Qt::AlignLeft);
 
     m_proj_current_label = new QLabel("Current Projection");
+    m_proj_current_label->setFont(m_options->Get_GUI_Font("GUI_H3_FONT"));
     m_proj_current_layout->addWidget(m_proj_current_label);
 
     m_proj_current_edit = new QLineEdit(m_options->Get_Current_Projection().c_str(), m_proj_current_widget);

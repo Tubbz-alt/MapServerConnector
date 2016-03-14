@@ -21,6 +21,10 @@
 #include <MSC.hpp>
 
 
+// Qt Libraries
+#include <QGuiApplication>
+#include <QtGui>
+
 /**
  * @class Options
  */
@@ -80,7 +84,26 @@ class Options
          */
         std::string Get_GUI_Config_Parameter( const std::string& key, 
                                               const std::string& default_value )const;
+
+         
+        /**
+         * @brief Get GUI Config Setting.
+         * 
+         * @param[in] key Key to search against.
+         * @param[in] default_value Value if search fails.
+         *
+         * @return Value of key.
+         */
+        int Get_GUI_Config_Parameter_Int32( const std::string& key, 
+                                            const int&         default_value )const;
+                                                 
+                                     
         
+        /**
+         * @brief Get the Requested GUI Font
+         */
+        QFont  Get_GUI_Font( const std::string& font_key = "GUI_H1_FONT" )const;
+
 
         /**
          * @brief Close map services.

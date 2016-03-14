@@ -12,6 +12,7 @@
 ServiceListWidget::ServiceListWidget( Options::ptr_t  options,
                                       QWidget*        parent )
  : QWidget(parent),
+   m_class_name("ServiceListWidget"),
    m_options(options)
 {
     // Create the main layout
@@ -25,7 +26,7 @@ ServiceListWidget::ServiceListWidget( Options::ptr_t  options,
 
     // Create the Table View
     Build_Table_Widget();
-    
+
 
     // Set the main layout
     setLayout( m_main_layout );
@@ -45,7 +46,9 @@ void ServiceListWidget::Build_Title_Widget()
     m_title_layout->setAlignment(Qt::AlignLeft);
     
     // Create the Label
-    m_title_label = new QLabel("Available Map Services");
+    m_title_label = new QLabel("Available Map Services", m_title_widget);
+    m_title_label->setFont(m_options->Get_GUI_Font("GUI_H1_FONT"));
+
     m_title_layout->addWidget(m_title_label);
     
     // Set the layout
@@ -61,10 +64,12 @@ void ServiceListWidget::Build_Title_Widget()
 /*******************************************/
 void ServiceListWidget::Build_Table_Widget()
 {
+    // Get option items
+    int column_0_width = m_options->Get_GUI_Config_Parameter_Int32("SERVICE_LIST_COLUMN_0_WIDTH", 25 );
 
     // Build the Header Items
     QStringList label_list;
-    label_list.push_back("Select");
+    label_list.push_back("Display");
     label_list.push_back("File Path");
     label_list.push_back("Driver");
     label_list.push_back("Connection State");
@@ -73,36 +78,31 @@ void ServiceListWidget::Build_Table_Widget()
     // Build the Table Widget
     m_table_widget = new QTableWidget(0, label_list.size(), this);
     m_table_widget->setHorizontalHeaderLabels( label_list );
+    m_table_widget->setColumnWidth(0, column_0_width );
+    m_table_widget->horizontalHeader()->setStretchLastSection(true);
 
+
+    //  Create the Status Widget
+    m_status_widget = new QStackedWidget(this);
+
+    
     // Update the table
     Update_Service_Table();
 
+    
+
+    // Connect Signals
+    connect( m_table_widget->selectionModel(), SIGNAL(currentRowChanged( const QModelIndex&, const QModelIndex&)),
+             this, SLOT(Detect_Selected_Row( const QModelIndex&, const QModelIndex& ))); 
+
+
+                                                           
     // Add to main widget
     m_main_layout->addWidget( m_table_widget );
-}
-
-
-/**********************************************/
-/*          Build the Status Widget           */
-/**********************************************/
-void ServiceListWidget::Build_Status_Widget()
-{
-
-    //  Create the Widget
-    m_status_widget = new QWidget(this);
-
-    // Create the layout
-    m_status_layout = new QVBoxLayout();
-
-
-
-    // Set the layout
-    m_status_widget->setLayout(m_status_layout);
-
-    // Add to main widget
     m_main_layout->addWidget(m_status_widget);
 
 }
+
 
 
 /*********************************************/
@@ -115,10 +115,20 @@ void ServiceListWidget::Update_Service_Table()
 
     // Resize the table
     m_table_widget->setRowCount( service_list.size() );
+    m_status_widget_map.clear();
+    while( m_status_widget->count() > 0 ){
+        m_status_widget->removeWidget(0);
+    }
+
+    // Add the default widget
+    m_status_widget->addWidget(new ServiceStatusWidget(FilePath(),
+                                                       m_options ));
+
 
     // Add each column
     int row = 0;
-    for( auto it=service_list.begin(); it != service_list.end(); it++, row++ )
+    int srow = 1;
+    for( auto it=service_list.begin(); it != service_list.end(); it++, row++, srow++ )
     {
         // Set the Checkbox Field
         QTableWidgetItem* checkItem = new QTableWidgetItem();
@@ -127,7 +137,7 @@ void ServiceListWidget::Update_Service_Table()
 
 
         // Set the Path
-        m_table_widget->setItem(row, 1, new QTableWidgetItem( it->first.Get_Basename().ToString().c_str())); 
+        m_table_widget->setItem(row, 1, new QTableWidgetItem( it->first.ToString().c_str())); 
         
         // Set the Driver
         m_table_widget->setItem(row, 2, new QTableWidgetItem( it->second->Get_Connector_Impl()->Get_Driver_Name().c_str() ));
@@ -147,7 +157,44 @@ void ServiceListWidget::Update_Service_Table()
         m_table_widget->setItem( row, 3, conn_state );
         m_table_widget->setItem( row, 4, proto_item );
 
+        
+        // Build the status widget
+        m_status_widget->addWidget( new ServiceStatusWidget(it->first,
+                                                            m_options));
+        
+        m_status_widget_map[row] = srow;
     }
 
+    for( int c=1; c<4; c++ ){
+        m_table_widget->resizeColumnToContents(c);
+    }
 }
+
+
+/***************************************/
+/*          Detect Selected Row        */
+/***************************************/
+void ServiceListWidget::Detect_Selected_Row( const QModelIndex& current ,
+                                             const QModelIndex& previous)
+{
+
+    LOG_MSG(LogLevel::TRACE) << "Detected New Row Selection: " << m_class_name << "::" << __func__;
+    
+    // Get the Row
+    int row = current.row();
+
+    m_status_widget->setCurrentIndex(m_status_widget_map[row]);
+}
+
+
+/*************************************/
+/*           Event Filter            */
+/*************************************/
+bool ServiceListWidget::eventFilter( QObject* watched, QEvent* event )
+{
+    LOG_MSG(LogLevel::TRACE) << "Detected Event: " << m_class_name << "::" << __func__;
+
+    return false;
+}
+
 

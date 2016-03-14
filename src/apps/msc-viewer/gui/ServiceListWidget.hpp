@@ -6,10 +6,15 @@
 #ifndef __MSC_APPS_MSC_VIEWER_GUI_SERVICE_LIST_WIDGET_HPP__
 #define __MSC_APPS_MSC_VIEWER_GUI_SERVICE_LIST_WIDGET_HPP__
 
+// C++ Libraries
+#include <map>
+
 // Qt Libraries
 #include <QtGui>
 #include <QHBoxLayout>
+#include <QHeaderView>
 #include <QLabel>
+#include <QStackedWidget>
 #include <QTableWidget>
 #include <QVBoxLayout>
 #include <QWidget>
@@ -17,6 +22,7 @@
 
 // MSC Viewer Libraries
 #include "../Options.hpp"
+#include "ServiceStatusWidget.hpp"
 
 
 /**
@@ -34,13 +40,25 @@ class ServiceListWidget : public QWidget
         ServiceListWidget( Options::ptr_t options,  
                            QWidget*       parent = NULL );
 
-    
+   
+        /**
+         * @brief Event Filter
+         */
+        virtual bool eventFilter( QObject* watched, QEvent* event );
+
+
     public slots:
         
         /**
          * @brief Update the Service Table
         */
         void Update_Service_Table();
+
+
+        /**
+         * @brief Detect Selected Row
+         */
+        void Detect_Selected_Row( const QModelIndex&, const QModelIndex& );
 
     private:
 
@@ -56,11 +74,9 @@ class ServiceListWidget : public QWidget
         void Build_Table_Widget();
         
 
-        /**
-         * @brief Build Status Widget
-        */
-        void Build_Status_Widget();
 
+        /// Class name
+        std::string m_class_name;
         
         /// Options
         Options::ptr_t m_options;
@@ -78,10 +94,10 @@ class ServiceListWidget : public QWidget
 
 
         /// Service Status Widget
-        QWidget*      m_status_widget;
-        QVBoxLayout*  m_status_layout;
+        QStackedWidget* m_status_widget;
 
-        
+        std::map<int,int> m_status_widget_map; 
+
 }; // End of ServiceListWidget Class
 
 #endif

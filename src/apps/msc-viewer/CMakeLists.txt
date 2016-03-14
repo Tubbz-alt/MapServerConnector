@@ -76,6 +76,8 @@ set( MSC_VIEWER_SOURCES
     gui/MapViewerWidget.hpp
     gui/ServiceListWidget.cpp
     gui/ServiceListWidget.hpp
+    gui/ServiceStatusWidget.cpp
+    gui/ServiceStatusWidget.hpp
     gui/ToolbarWidget.cpp
     gui/ToolbarWidget.hpp
     gui/ViewerStatusWidget.cpp

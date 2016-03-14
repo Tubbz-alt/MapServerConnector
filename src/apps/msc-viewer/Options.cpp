@@ -83,6 +83,42 @@ std::string Options::Get_GUI_Config_Parameter( const std::string& key,
 }
 
 
+/********************************************/
+/*        Get GUI Config Setting            */
+/********************************************/
+int Options::Get_GUI_Config_Parameter_Int32( const std::string& key, 
+                                             const int&         default_value )const
+{
+    if( m_gui_config_settings.find(key) == m_gui_config_settings.end() ){
+        return default_value;
+    }
+    return std::stoi(m_gui_config_settings.find(key)->second);
+}
+
+
+/****************************************/
+/*      Get the Requested GUI Font      */
+/****************************************/
+QFont Options::Get_GUI_Font( const std::string& key )const
+{
+    // Default
+    QFont font = QGuiApplication::font();
+
+    // Override
+    bool found_family, found_size, found_weight;
+    std::string family = Get_GUI_Config_Parameter(key + "_FAMILY", found_family );
+    std::string size   = Get_GUI_Config_Parameter(key + "_SIZE",   found_size );
+    std::string weight = Get_GUI_Config_Parameter(key + "_WEIGHT", found_weight );
+
+    // Check 
+    if( found_family ){ font.setFamily( family.c_str() ); }
+    if( found_size   ){ font.setPointSize( std::stoi( size )); }
+    if( found_weight ){ font.setWeight( std::stoi( weight )); }
+
+    return font;
+}
+
+
 /*********************************************/
 /*          Close all map services           */
 /*********************************************/
@@ -129,9 +165,23 @@ void Options::Load_Default_Settings()
     m_gui_config_settings["SERVICES_DEFAULT_PROJECTION"] = "EPSG:4326";
     m_current_projection = "EPSG:4326";
 
+    
+    // Misc GUI Settings
+    m_gui_config_settings["GUI_H1_FONT_FAMILY"] = QGuiApplication::font().family().toStdString();
+    m_gui_config_settings["GUI_H1_FONT_SIZE"]   = std::to_string(QGuiApplication::font().pointSize() + 4);
+    m_gui_config_settings["GUI_H1_FONT_WEIGHT"] = std::to_string(QGuiApplication::font().weight());
+    
+    m_gui_config_settings["GUI_H2_FONT_FAMILY"] = QGuiApplication::font().family().toStdString();
+    m_gui_config_settings["GUI_H2_FONT_SIZE"]   = std::to_string(QGuiApplication::font().pointSize() + 2);
+    m_gui_config_settings["GUI_H2_FONT_WEIGHT"] = std::to_string(QGuiApplication::font().weight());
+    
+    m_gui_config_settings["GUI_H3_FONT_FAMILY"] = QGuiApplication::font().family().toStdString();
+    m_gui_config_settings["GUI_H3_FONT_SIZE"]   = std::to_string(QGuiApplication::font().pointSize());
+    m_gui_config_settings["GUI_H3_FONT_WEIGHT"] = std::to_string(QGuiApplication::font().weight()+2);
+
+    m_gui_config_settings["SERVICE_LIST_COLUMN_0_WIDTH"] = "50";
+
 }
-
-
 
 
 /********************************************/
@@ -204,6 +254,18 @@ void Options::Generate_Configuration_File( const FilePath& config_path )
     // Write the GUI Configuration
     fout << "#  GUI Configuration Information" << std::endl;
     fout << "GUI_TITLE=Map Service Connector Viewer" << std::endl;
+    fout << "GUI_H1_FONT_FAMILY=" << m_gui_config_settings["GUI_H1_FONT_FAMILY"] << std::endl;
+    fout << "GUI_H1_FONT_SIZE=" << m_gui_config_settings["GUI_H1_FONT_SIZE"] << std::endl;
+    fout << "GUI_H1_FONT_WEIGHT=" << m_gui_config_settings["GUI_H1_FONT_WEIGHT"] << std::endl;
+    
+    fout << "GUI_H2_FONT_FAMILY=" << m_gui_config_settings["GUI_H2_FONT_FAMILY"] << std::endl;
+    fout << "GUI_H2_FONT_SIZE=" << m_gui_config_settings["GUI_H2_FONT_SIZE"] << std::endl;
+    fout << "GUI_H2_FONT_WEIGHT=" << m_gui_config_settings["GUI_H2_FONT_WEIGHT"] << std::endl;
+    
+    fout << "GUI_H3_FONT_FAMILY=" << m_gui_config_settings["GUI_H3_FONT_FAMILY"] << std::endl;
+    fout << "GUI_H3_FONT_SIZE=" << m_gui_config_settings["GUI_H3_FONT_SIZE"] << std::endl;
+    fout << "GUI_H3_FONT_WEIGHT=" << m_gui_config_settings["GUI_H3_FONT_WEIGHT"] << std::endl;
+    fout << "SERVICE_LIST_COLUMN_0_WIDTH=" << m_gui_config_settings["SERVICE_LIST_COLUMN_0_WIDTH"] << std::endl;
     fout << std::endl;
 
     // Close the File
