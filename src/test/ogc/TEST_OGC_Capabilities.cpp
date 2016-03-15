@@ -39,7 +39,14 @@ TEST( OGC_Capabilities, Parse_Capabilities_WMS_1_3_0_Valid )
     
 
     // Pass to Parser
-    MSC::OGC::Capabilities::ptr_t capabilities = MSC::OGC::Capabilities::Parse_WMS_1_3_0( contents );
+    MSC::Status status;
+    MSC::OGC::Capabilities::ptr_t capabilities = MSC::OGC::Capabilities::Parse_WMS_1_3_0( contents, 
+                                                                                          status );
+
+    // Check the status
+    ASSERT_EQ( status.Get_Code(), MSC::StatusCode::SUCCESS );
+    ASSERT_NE( capabilities, nullptr );
+
 
     FAIL();
 

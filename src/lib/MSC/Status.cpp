@@ -46,6 +46,11 @@ std::string StatusCodeToString( StatusCode const& code )
     else if( code == StatusCode::DUPLICATE_GENERATOR ){
         return "DUPLICATE_GENERATOR";
     }
+
+    // Invalid Format
+    else if( code == StatusCode::INVALID_FORMAT ){
+        return "INVALID_FORMAT";
+    }
         
     return "UNKNOWN";
 }

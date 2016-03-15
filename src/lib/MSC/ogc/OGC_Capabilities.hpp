@@ -12,6 +12,7 @@
 
 // MSC Libraries
 #include "../Capabilities.hpp"
+#include "../Status.hpp"
 
 
 namespace MSC{
@@ -23,7 +24,11 @@ namespace OGC{
 class Capabilities : public MSC::Capabilities
 {
     public:
-    
+
+        /// Pointer Type
+        typedef std::shared_ptr<Capabilities> ptr_t;
+        
+
         /**
          * @brief Constructor
         */
@@ -44,8 +49,8 @@ class Capabilities : public MSC::Capabilities
          *
          * @return Capabilities results.  Null if failed.
         */
-        virtual Capabilities::ptr_t  Parse_WMS_1_3_0( const std::string& contents,
-                                                      Status&            status );
+        static Capabilities::ptr_t  Parse_WMS_1_3_0( const std::string& contents,
+                                                     Status&            status );
 
     
     private:

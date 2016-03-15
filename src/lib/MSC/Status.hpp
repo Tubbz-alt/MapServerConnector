@@ -24,6 +24,7 @@ enum class StatusCode : int16_t{
     NO_KEY_FOUND        = 4,
     CONNECTION_ERROR    = 5,
     DUPLICATE_GENERATOR = 6,
+    INVALID_FORMAT      = 7,
 }; // End of StatusCode Enumeration
 
 
