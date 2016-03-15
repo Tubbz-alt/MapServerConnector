@@ -29,6 +29,18 @@ std::string Capabilities::ToString()const
     return "";
 }
 
+
+/**************************************/
+/*          Convert to String         */
+/**************************************/
+Capabilities::ptr_t Capabilities::Parse_WMS_1_3_0( const std::string&  contents,
+                                                   Status&             status )
+{
+    // 
+    status = Status(StatusCode::NOT_IMPLEMENTED_YET,"Not implemented yet.");
+    return nullptr;
+}
+
 } // End of OGC Namespace
 } // End of MSC Namespace
 

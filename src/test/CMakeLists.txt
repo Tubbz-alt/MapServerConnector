@@ -7,6 +7,13 @@
 
 
 #---------------------------------#
+#-     Change the Output Path    -#
+#---------------------------------#
+SET( EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin )
+SET( LIBRARY_OUTPUT_PATH    ${PROJECT_BINARY_DIR}/lib )
+
+
+#---------------------------------#
 #-     Find Boost Libraries      -#
 #---------------------------------#
 ADD_DEFINITIONS(-DBOOST_LOG_DYN_LINK)
@@ -68,6 +75,7 @@ set( UNIT_TEST_SOURCES
      TEST_Configuration.cpp
      TEST_Connection_Generator_Factory.cpp
      TEST_Initialization.cpp
+     ogc/TEST_OGC_Capabilities.cpp
 )
 
 

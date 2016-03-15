@@ -35,6 +35,18 @@ class Capabilities : public MSC::Capabilities
         */
         virtual std::string ToString()const;
 
+        
+        /**
+         * @brief Parse WMS 1.3.0 File Data
+         *
+         * @param[in] contents String contents.
+         * @param[out] status  Status of the operation.
+         *
+         * @return Capabilities results.  Null if failed.
+        */
+        virtual Capabilities::ptr_t  Parse_WMS_1_3_0( const std::string& contents,
+                                                      Status&            status );
+
     
     private:
         

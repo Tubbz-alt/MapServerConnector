@@ -66,6 +66,8 @@ Status Connection_Generator_Factory::Finalize()
     if( generator != nullptr ){
         generator = nullptr;
     }
+    
+    status = Status(StatusCode::SUCCESS);
 
     return status;
 }

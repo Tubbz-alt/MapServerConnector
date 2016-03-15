@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WMS_Capabilities version="1.3.0" xmlns="http://www.opengis.net/wms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wms http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd">
+  <Service>
+    <Name><![CDATA[WMS]]></Name>
+    <Title><![CDATA[USGS_EROS_Ortho]]></Title>
+    <Abstract><![CDATA[USGS_EROS_Ortho service contains orthorectified digital aerial photographs and satellite imagery that are commonly referred to as orthoimagery. The imagery in this service is derived from high resolution images that combine the visual attributes of an aerial photograph with the spatial accuracy and geometric characteristics of a map. The resolution is primarily 1-meter, and the source imagery is acquired through partnerships with U.S. Department of Agriculture’s Farm Service Agency and other cooperating Federal, State, and local agencies. One meter resolution imagery means that each pixel in the orthoimage covers one meter on the earth’s surface. TNM_Large_Scale_Imagery service data is viewed at scales of 1:144,000 and larger in The National Map Viewer. The National Map also has higher resolution orthoimagery acquired through partnerships with the National Geospatial-Intelligence Agency, and other State and local cooperating agencies.  The resolution of this higher resolution orthoimagery is commonly 1-foot (0.3048-meter), such that each pixel in the orthoimage represents one foot on the earth’s surface. However, this orthoimagery can be an even higher resolution, such as 6-inch (0.1524-meter).]]></Abstract>
+    <KeywordList><Keyword><![CDATA[ ]]></Keyword></KeywordList>
+    <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://isse.cr.usgs.gov/arcgis/services/Orthoimagery/USGS_EROS_Ortho/ImageServer/WMSServer"/>
+    <ContactInformation>
+      <ContactPersonPrimary>
+        <ContactPerson><![CDATA[Customer Services Representative]]></ContactPerson>
+        <ContactOrganization><![CDATA[Earth Resources Observation and Science (EROS)]]></ContactOrganization>
+      </ContactPersonPrimary>
+      <ContactPosition><![CDATA[ ]]></ContactPosition>
+      <ContactAddress>
+        <AddressType><![CDATA[postal]]></AddressType>
+        <Address><![CDATA[47914 252nd Street]]></Address>
+        <City><![CDATA[Sioux Falls]]></City>
+        <StateOrProvince><![CDATA[SD]]></StateOrProvince>
+        <PostCode><![CDATA[57198]]></PostCode>
+        <Country><![CDATA[US]]></Country>
+      </ContactAddress>
+      <ContactVoiceTelephone><![CDATA[(605) 594-6151]]></ContactVoiceTelephone>
+      <ContactFacsimileTelephone><![CDATA[(605) 594-6589]]></ContactFacsimileTelephone>
+      <ContactElectronicMailAddress><![CDATA[webmapping@usgs.gov]]></ContactElectronicMailAddress>
+    </ContactInformation>
+    <Fees><![CDATA[ ]]></Fees>
+    <AccessConstraints><![CDATA[None.  Acknowledgment of the U.S. Geological Survey would be appreciated in products derived from these data.]]></AccessConstraints>
+    <LayerLimit>1</LayerLimit>
+  </Service>
+  <Capability>
+    <Request>
+      <GetCapabilities>
+        <Format>text/xml</Format>
+        <DCPType>
+          <HTTP><Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://isse.cr.usgs.gov/arcgis/services/Orthoimagery/USGS_EROS_Ortho/ImageServer/WMSServer"/></Get></HTTP>
+        </DCPType>
+      </GetCapabilities>
+      <GetMap>
+        <Format>image/tiff</Format>
+        <Format>image/png</Format>
+        <Format>image/png24</Format>
+        <Format>image/png32</Format>
+        <Format>image/bmp</Format>
+        <Format>image/jpeg</Format>
+        <Format>image/svg</Format>
+        <Format>image/bil</Format>
+        <DCPType>
+          <HTTP><Get><OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple" xlink:href="http://isse.cr.usgs.gov/arcgis/services/Orthoimagery/USGS_EROS_Ortho/ImageServer/WMSServer"/></Get></HTTP>
+        </DCPType>
+      </GetMap>
+    </Request>
+    <Exception>
+      <Format>XML</Format>
+      <Format>INIMAGE</Format>
+      <Format>BLANK</Format>
+    </Exception>
+   <Layer>
+    <Name>0</Name>
+    <Title>USGS_EROS_Ortho</Title>
+    <Abstract>USGS_EROS_Ortho service contains orthorectified digital aerial photographs and satellite imagery that are commonly referred to as orthoimagery. The imagery in this service is derived from high resolution images that combine the visual attributes of an aerial photograph with the spatial accuracy and geometric characteristics of a map. The resolution is primarily 1-meter, and the source imagery is acquired through partnerships with U.S. Department of Agriculture’s Farm Service Agency and other cooperating Federal, State, and local agencies. One meter resolution imagery means that each pixel in the orthoimage covers one meter on the earth’s surface. TNM_Large_Scale_Imagery service data is viewed at scales of 1:144,000 and larger in The National Map Viewer. The National Map also has higher resolution orthoimagery acquired through partnerships with the National Geospatial-Intelligence Agency, and other State and local cooperating agencies.  The resolution of this higher resolution orthoimagery is commonly 1-foot (0.3048-meter), such that each pixel in the orthoimage represents one foot on the earth’s surface. However, this orthoimagery can be an even higher resolution, such as 6-inch (0.1524-meter).</Abstract>
+<CRS>CRS:84</CRS>
+<CRS>EPSG:4326</CRS>
+<CRS>EPSG:3857</CRS>
+<CRS>CRS:84</CRS>
+<CRS>EPSG:4326</CRS>
+<CRS>CRS:84</CRS>
+<CRS>EPSG:4326</CRS>
+<CRS>EPSG:3857</CRS>
+<CRS>EPSG:102100</CRS>
+<CRS>EPSG:102016</CRS>
+<CRS>EPSG:102017</CRS>
+<CRS>EPSG:3571</CRS>
+<CRS>EPSG:3572</CRS>
+<CRS>EPSG:3573</CRS>
+<CRS>EPSG:3574</CRS>
+<CRS>EPSG:3575</CRS>
+<CRS>EPSG:3576</CRS>
+<CRS>EPSG:3338</CRS>
+<CRS>EPSG:102006</CRS>
+<CRS>EPSG:2260</CRS>
+<CRS>EPSG:102715</CRS>
+<CRS>EPSG:2261</CRS>
+<CRS>EPSG:102716</CRS>
+<CRS>EPSG:2262</CRS>
+<CRS>EPSG:102717</CRS>
+<CRS>EPSG:2263</CRS>
+<CRS>EPSG:102718</CRS>
+<CRS>EPSG:3031</CRS>
+<CRS>EPSG:3785</CRS>
+<CRS>EPSG:102113</CRS>
+<CRS>EPSG:4267</CRS>
+<CRS>EPSG:4269</CRS>
+<CRS>EPSG:26717</CRS>
+<CRS>EPSG:26718</CRS>
+<CRS>EPSG:26719</CRS>
+<CRS>EPSG:26917</CRS>
+<CRS>EPSG:26918</CRS>
+<CRS>EPSG:26919</CRS>
+<CRS>EPSG:32015</CRS>
+<CRS>EPSG:32016</CRS>
+<CRS>EPSG:32017</CRS>
+<CRS>EPSG:32018</CRS>
+<CRS>EPSG:4456</CRS>
+<CRS>EPSG:32115</CRS>
+<CRS>EPSG:32116</CRS>
+<CRS>EPSG:32117</CRS>
+<CRS>EPSG:32118</CRS>
+<CRS>EPSG:54004</CRS>
+<CRS>EPSG:54008</CRS>
+<CRS>EPSG:102003</CRS>
+<CRS>EPSG:102006</CRS>
+<CRS>EPSG:3338</CRS>
+<CRS>EPSG:102007</CRS>
+<CRS>EPSG:102039</CRS>
+<CRS>EPSG:102100</CRS>
+<CRS>EPSG:3857</CRS>
+<CRS>EPSG:102113</CRS>
+<CRS>EPSG:3785</CRS>
+<CRS>EPSG:102715</CRS>
+<CRS>EPSG:2260</CRS>
+<CRS>EPSG:102716</CRS>
+<CRS>EPSG:2261</CRS>
+<CRS>EPSG:102717</CRS>
+<CRS>EPSG:2262</CRS>
+<CRS>EPSG:102718</CRS>
+<CRS>EPSG:2263</CRS>
+<EX_GeographicBoundingBox><westBoundLongitude>-179.998075</westBoundLongitude><eastBoundLongitude>179.998075</eastBoundLongitude><southBoundLatitude>-85.050963</southBoundLatitude><northBoundLatitude>85.050963</northBoundLatitude></EX_GeographicBoundingBox>
+<BoundingBox CRS="CRS:84" minx="-179.998075" miny="-85.050963" maxx="179.998075" maxy="85.050963"/>
+<BoundingBox CRS="EPSG:4326" minx="-85.050963" miny="-179.998075" maxx="85.050963" maxy="179.998075"/>
+<BoundingBox CRS="EPSG:3857" minx="-20037294.014300" miny="-20037293.992700" maxx="20037294.035700" maxy="20037294.007300"/>
+<EX_GeographicBoundingBox><westBoundLongitude>-179.998075</westBoundLongitude><eastBoundLongitude>179.998075</eastBoundLongitude><southBoundLatitude>-85.050963</southBoundLatitude><northBoundLatitude>85.050963</northBoundLatitude></EX_GeographicBoundingBox>
+<BoundingBox CRS="CRS:84" minx="-179.998075" miny="-85.050963" maxx="179.998075" maxy="85.050963"/>
+<BoundingBox CRS="EPSG:4326" minx="-85.050963" miny="-179.998075" maxx="85.050963" maxy="179.998075"/>
+<EX_GeographicBoundingBox><westBoundLongitude>-179.998075</westBoundLongitude><eastBoundLongitude>179.998075</eastBoundLongitude><southBoundLatitude>-85.050963</southBoundLatitude><northBoundLatitude>85.050963</northBoundLatitude></EX_GeographicBoundingBox>
+<BoundingBox CRS="CRS:84" minx="-179.998075" miny="-85.050963" maxx="179.998075" maxy="85.050963"/>
+<BoundingBox CRS="EPSG:4326" minx="-85.050963" miny="-179.998075" maxx="85.050963" maxy="179.998075"/>
+<BoundingBox CRS="EPSG:3857" minx="-20037294.014300" miny="-20037293.992700" maxx="20037294.035700" maxy="20037294.007300"/>
+<BoundingBox CRS="EPSG:102100" minx="-20037294.014300" miny="-20037293.992700" maxx="20037294.035700" maxy="20037294.007300"/>
+<BoundingBox CRS="EPSG:102016" minx="-19451167.660409" miny="-19451167.660410" maxx="19451167.660409" maxy="19451167.649428"/>
+<BoundingBox CRS="EPSG:102017" minx="-12730026.398309" miny="-12730026.398310" maxx="12730026.398309" maxy="12730026.391123"/>
+<BoundingBox CRS="EPSG:3571" minx="-12730026.398309" miny="-12730026.391123" maxx="12730026.398309" maxy="12730026.398310"/>
+<BoundingBox CRS="EPSG:3572" minx="-12730026.398112" miny="-12730026.398303" maxx="12730026.398233" maxy="12730026.397778"/>
+<BoundingBox CRS="EPSG:3573" minx="-12730026.397826" miny="-12730026.398209" maxx="12730026.398264" maxy="12730026.397854"/>
+<BoundingBox CRS="EPSG:3574" minx="-12730026.398194" miny="-12730026.398177" maxx="12730026.398011" maxy="12730026.396191"/>
+<BoundingBox CRS="EPSG:3575" minx="-12730026.398175" miny="-12730026.397996" maxx="12730026.397116" maxy="12730026.398287"/>
+<BoundingBox CRS="EPSG:3576" minx="-12730026.398310" miny="-12730026.398309" maxx="12730026.391123" maxy="12730026.398309"/>
+<BoundingBox CRS="EPSG:3338" minx="-13739218.841268" miny="-8935187.497855" maxx="13739218.841416" maxy="17285624.777509"/>
+<BoundingBox CRS="EPSG:102006" minx="-13739218.841268" miny="-8935187.497855" maxx="13739218.841416" maxy="17285624.777509"/>
+<BoundingBox CRS="EPSG:2260" minx="-17954198.578460" miny="-45633856.584219" maxx="18938448.578460" maxy="17421500.484073"/>
+<BoundingBox CRS="EPSG:102715" minx="-17954198.578460" miny="-45633856.584219" maxx="18938448.578460" maxy="17421500.484073"/>
+<BoundingBox CRS="EPSG:2261" minx="-17626807.051441" miny="-46060499.148073" maxx="19267223.718108" maxy="16997222.732591"/>
+<BoundingBox CRS="EPSG:102716" minx="-17626807.051441" miny="-46060499.148073" maxx="19267223.718108" maxy="16997222.732591"/>
+<BoundingBox CRS="EPSG:2262" minx="-17298723.718108" miny="-46060499.148073" maxx="19595307.051441" maxy="16997222.732591"/>
+<BoundingBox CRS="EPSG:102717" minx="-17298723.718108" miny="-46060499.148073" maxx="19595307.051441" maxy="16997222.732591"/>
+<BoundingBox CRS="EPSG:2263" minx="-120038987.025921" miny="-96539899.177513" maxx="122007487.026135" maxy="80805040.574388"/>
+<BoundingBox CRS="EPSG:102718" minx="-120038987.025921" miny="-96539899.177513" maxx="122007487.026135" maxy="80805040.574388"/>
+<BoundingBox CRS="EPSG:3031" minx="-30635955.946090" miny="-30635955.929979" maxx="30635955.947207" maxy="30635955.947273"/>
+<BoundingBox CRS="EPSG:3785" minx="-20037294.014300" miny="-20037293.992700" maxx="20037294.035700" maxy="20037294.007300"/>
+<BoundingBox CRS="EPSG:102113" minx="-20037294.014300" miny="-20037293.992700" maxx="20037294.035700" maxy="20037294.007300"/>
+<BoundingBox CRS="EPSG:4267" minx="-85.050963" miny="-179.998075" maxx="85.050963" maxy="179.998075"/>
+<BoundingBox CRS="EPSG:4269" minx="-85.050963" miny="-179.998075" maxx="85.050963" maxy="179.998075"/>
+<BoundingBox CRS="EPSG:26717" minx="-5120880.632721" miny="-9606676.021802" maxx="6120880.632721" maxy="9606676.022698"/>
+<BoundingBox CRS="EPSG:26718" minx="-5120880.632721" miny="-9606676.021802" maxx="6120880.632721" maxy="9606676.022698"/>
+<BoundingBox CRS="EPSG:26719" minx="-5120880.632721" miny="-9606676.021802" maxx="6120880.632721" maxy="9606676.022698"/>
+<BoundingBox CRS="EPSG:26917" minx="-5120763.767724" miny="-9606772.451061" maxx="6120763.767724" maxy="9606772.451958"/>
+<BoundingBox CRS="EPSG:26918" minx="-5120763.767724" miny="-9606772.451061" maxx="6120763.767724" maxy="9606772.451958"/>
+<BoundingBox CRS="EPSG:26919" minx="-5120763.767724" miny="-9606772.451061" maxx="6120763.767724" maxy="9606772.451958"/>
+<BoundingBox CRS="EPSG:32015" minx="-17947937.011572" miny="-46060836.825620" maxx="18947937.011572" maxy="16998091.384800"/>
+<BoundingBox CRS="EPSG:32016" minx="-17947398.928807" miny="-46059493.339763" maxx="18947398.928807" maxy="16997595.590608"/>
+<BoundingBox CRS="EPSG:32017" minx="-17947398.928807" miny="-46059493.339763" maxx="18947398.928807" maxy="16997595.590608"/>
+<BoundingBox CRS="EPSG:32018" minx="-119017117.380958" miny="-96554571.939674" maxx="123017117.381172" maxy="80781400.275729"/>
+<BoundingBox CRS="EPSG:4456" minx="-119017117.380958" miny="-96554571.939674" maxx="123017117.381172" maxy="80781400.275729"/>
+<BoundingBox CRS="EPSG:32115" minx="-5472450.671616" miny="-13909227.305325" maxx="5772450.671616" maxy="5310083.967713"/>
+<BoundingBox CRS="EPSG:32116" minx="-5372661.534602" miny="-14039268.218869" maxx="5872661.534602" maxy="5180763.850421"/>
+<BoundingBox CRS="EPSG:32117" minx="-5272661.534602" miny="-14039268.218869" maxx="5972661.534602" maxy="5180763.850421"/>
+<BoundingBox CRS="EPSG:32118" minx="-36587956.421413" miny="-29425420.120146" maxx="37187956.421479" maxy="24629425.625925"/>
+<BoundingBox CRS="EPSG:54004" minx="-20037294.014300" miny="-19994660.910457" maxx="20037294.035700" maxy="19994660.925057"/>
+<BoundingBox CRS="EPSG:54008" minx="-20037294.014300" miny="-9449201.931097" maxx="20037294.035700" maxy="9449201.932361"/>
+<BoundingBox CRS="EPSG:102003" minx="-16885988.182217" miny="-8563837.436577" maxx="16885988.182105" maxy="13686439.080143"/>
+<BoundingBox CRS="EPSG:102006" minx="-13739218.841268" miny="-8935187.497855" maxx="13739218.841416" maxy="17285624.777509"/>
+<BoundingBox CRS="EPSG:3338" minx="-13739218.841268" miny="-8935187.497855" maxx="13739218.841416" maxy="17285624.777509"/>
+<BoundingBox CRS="EPSG:102007" minx="-22474546.463745" miny="-7089150.853540" maxx="22474546.463745" maxy="10866605.626946"/>
+<BoundingBox CRS="EPSG:102039" minx="-16885988.182217" miny="-6957051.176000" maxx="16885988.182105" maxy="15293225.340720"/>
+<BoundingBox CRS="EPSG:102100" minx="-20037294.014300" miny="-20037293.992700" maxx="20037294.035700" maxy="20037294.007300"/>
+<BoundingBox CRS="EPSG:3857" minx="-20037294.014300" miny="-20037293.992700" maxx="20037294.035700" maxy="20037294.007300"/>
+<BoundingBox CRS="EPSG:102113" minx="-20037294.014300" miny="-20037293.992700" maxx="20037294.035700" maxy="20037294.007300"/>
+<BoundingBox CRS="EPSG:3785" minx="-20037294.014300" miny="-20037293.992700" maxx="20037294.035700" maxy="20037294.007300"/>
+<BoundingBox CRS="EPSG:102715" minx="-17954198.578460" miny="-45633856.584219" maxx="18938448.578460" maxy="17421500.484073"/>
+<BoundingBox CRS="EPSG:2260" minx="-17954198.578460" miny="-45633856.584219" maxx="18938448.578460" maxy="17421500.484073"/>
+<BoundingBox CRS="EPSG:102716" minx="-17626807.051441" miny="-46060499.148073" maxx="19267223.718108" maxy="16997222.732591"/>
+<BoundingBox CRS="EPSG:2261" minx="-17626807.051441" miny="-46060499.148073" maxx="19267223.718108" maxy="16997222.732591"/>
+<BoundingBox CRS="EPSG:102717" minx="-17298723.718108" miny="-46060499.148073" maxx="19595307.051441" maxy="16997222.732591"/>
+<BoundingBox CRS="EPSG:2262" minx="-17298723.718108" miny="-46060499.148073" maxx="19595307.051441" maxy="16997222.732591"/>
+<BoundingBox CRS="EPSG:102718" minx="-120038987.025921" miny="-96539899.177513" maxx="122007487.026135" maxy="80805040.574388"/>
+<BoundingBox CRS="EPSG:2263" minx="-120038987.025921" miny="-96539899.177513" maxx="122007487.026135" maxy="80805040.574388"/>
+        <Style>
+          <Name>default</Name>
+          <Title>0</Title>
+          <LegendURL width="104" height="60">
+            <Format>image/png</Format>
+            <OnlineResource xlink:href="http://isse.cr.usgs.gov/arcgis/services/Orthoimagery/USGS_EROS_Ortho/ImageServer/WMSServer?request=GetLegendGraphic%26version=1.3.0%26format=image/png%26layer=0" xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" />
+          </LegendURL>
+        </Style>
+   </Layer>
+  </Capability>
+</WMS_Capabilities>
