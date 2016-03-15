@@ -59,6 +59,12 @@ class MapServiceConnector
          */
         bool Is_Connected()const;
 
+        
+        /**
+         * @brief Get the Service Capabilities
+        */
+        MSC::Capabilities::ptr_t Get_Capabilities( Status& status );
+
 
         /**
          * @brief Get the requested map

@@ -6,6 +6,17 @@
 #
 
 
+#  Configure C++11
+set( CMAKE_CXX_FLAGS "-std=c++11 -Wall")
+
+#---------------------------------#
+#-     Change the Output Path    -#
+#---------------------------------#
+SET( EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin )
+SET( LIBRARY_OUTPUT_PATH    ${PROJECT_BINARY_DIR}/lib )
+
+
+
 #---------------------------------#
 #-     Find Boost Libraries      -#
 #---------------------------------#
@@ -40,6 +51,7 @@ include_directories( ${GDAL_INCLUDE_DIR} )
 #------------------------------#
 set( LIBRARY_SOURCES
      MSC/Base_Connector.cpp
+     MSC/Capabilities.cpp
      MSC/Connection_Generator_Factory.cpp
      MSC/Configuration.cpp 
      MSC/Enumerations.cpp
@@ -50,6 +62,7 @@ set( LIBRARY_SOURCES
      MSC/Status.cpp
      MSC/esri/ArcGIS_Connector.cpp
      MSC/io/ConfigParser.cpp
+     MSC/ogc/OGC_Capabilities.cpp
      MSC/ogc/OGC_Connector.cpp
      MSC/utilities/GDAL_Utilities.cpp
      MSC/utilities/Log_Utilities.cpp
@@ -62,6 +75,7 @@ set( LIBRARY_SOURCES
 set( LIBRARY_HEADERS
      MSC.hpp
      MSC/Base_Connector.hpp
+     MSC/Capabilities.hpp
      MSC/Connection_Generator_Factory.hpp
      MSC/Configuration.hpp
      MSC/Enumerations.hpp
@@ -72,6 +86,7 @@ set( LIBRARY_HEADERS
      MSC/Status.hpp
      MSC/esri/ArcGIS_Connector.hpp
      MSC/io/ConfigParser.hpp
+     MSC/ogc/OGC_Capabilities.hpp
      MSC/ogc/OGC_Connector.hpp
      MSC/utilities/GDAL_Utilities.hpp
      MSC/utilities/Log_Utilities.hpp

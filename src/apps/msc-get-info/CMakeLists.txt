@@ -1,8 +1,8 @@
 #    File:    CMakeLists.txt
 #    Author:  Marvin Smith
-#    Date:    1/27/2016
+#    Date:    3/14/2016
 #
-#    Purpose:  Image Fetcher
+#    Purpose:  MSC-Get-Info Application
 #
 
 
@@ -14,6 +14,7 @@ set( CMAKE_CXX_FLAGS "-std=c++11 -Wall")
 #---------------------------------#
 SET( EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin )
 SET( LIBRARY_OUTPUT_PATH    ${PROJECT_BINARY_DIR}/lib )
+
 
 
 
@@ -32,25 +33,18 @@ find_package( Boost REQUIRED
 include_directories( ${Boost_INCLUDE_DIRS})
 
 
-#----------------------------------------#
-#-        Find OpenCV Libraries         -#
-#----------------------------------------#
-find_package( OpenCV REQUIRED )
-
-include_directories( ${OpenCV_INCLUDE_DIRS} )
-
 #-------------------------------#
 #-        Header Files         -#
 #-------------------------------#
-set( IMAGE_FETCHER_HEADERS
+set( MSC_GET_INFO_HEADERS
 )
 
 
 #-------------------------------#
 #-        Source Files         -#
 #-------------------------------#
-set( IMAGE_FETCHER_SOURCES
-     main.cpp
+set( MSC_GET_INFO_SOURCES
+     msc-get-info.cpp
 )
 
 
@@ -62,15 +56,15 @@ include_directories(../../lib)
 #----------------------------------#
 #-     Build the Application      -#
 #----------------------------------#
-add_executable( image-fetcher
-                ${IMAGE_FETCHER_SOURCES}
-                ${IMAGE_FETCHER_HEADERS} )
+add_executable( msc-get-info
+                ${MSC_GET_INFO_SOURCES}
+                ${MSC_GET_INFO_HEADERS} )
 
 
 #-------------------------------------------#
 #-     Link against required libraries     -#
 #-------------------------------------------#
-target_link_libraries( image-fetcher
+target_link_libraries( msc-get-info
                        MSC
                        pthread
                        ${Boost_LIBRARIES}

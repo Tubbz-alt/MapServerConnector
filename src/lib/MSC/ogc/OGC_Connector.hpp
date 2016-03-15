@@ -15,6 +15,7 @@
 #include "../Base_Connector.hpp"
 #include "../Configuration.hpp"
 #include "../MapRequest.hpp"
+#include "OGC_Enumerations.hpp"
 
 
 // Curl
@@ -57,6 +58,12 @@ class OGC_Connector : public Base_Connector
          */
         virtual void Disconnect( Status& status );
         
+
+        /**
+         * @brief Get the Capabilities
+        */
+        virtual MSC::Capabilities::ptr_t  Get_Capabilities( Status& status );
+
 
         /**
          * @brief Get Map
@@ -118,6 +125,11 @@ class OGC_Connector : public Base_Connector
         
         /// Version Info
         std::string m_wms_version;
+        std::string m_wmts_version;
+
+        /// Service to Use
+        OGC::OGC_Service m_current_service;
+
 
         /// Unparsed Features / Capabilities
         std::string m_features_output;

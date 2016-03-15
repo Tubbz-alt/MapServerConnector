@@ -105,6 +105,21 @@ bool MapServiceConnector::Is_Connected()const
 }
 
 
+/*****************************************************/
+/*          Get the Requested Capabilities           */
+/*****************************************************/
+Capabilities::ptr_t MapServiceConnector::Get_Capabilities( Status& status )
+{
+    // Check if Manager is Null
+    if( m_connection_manager == nullptr ){
+        status = Status( StatusCode::NO_CONNECTOR_FOUND,
+                         "Map-Connector is null.");
+        return nullptr;
+    }
+
+    return m_connection_manager->Get_Capabilities( status );
+}
+
 /*******************************************/
 /*          Get the Requested Map          */
 /*******************************************/

@@ -16,3 +16,8 @@ add_subdirectory(msc-viewer)
 #---------------------------------------------#
 add_subdirectory(image-fetcher)
 
+#---------------------------------------------#
+#-      Build the Get-Info Application       -#
+#---------------------------------------------#
+add_subdirectory(msc-get-info)
+

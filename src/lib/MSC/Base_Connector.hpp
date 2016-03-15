@@ -12,6 +12,7 @@
 
 
 // MSC Libraries
+#include "Capabilities.hpp"
 #include "Configuration.hpp"
 #include "MapRequest.hpp"
 #include "Status.hpp"
@@ -54,8 +55,14 @@ class Base_Connector
         inline bool Is_Connected()const{
             return m_is_connected;
         }
-
         
+
+        /**
+         * @brief Get Capabilities
+        */
+        virtual Capabilities::ptr_t Get_Capabilities( Status& status ) = 0;
+       
+       
         /**
          * @brief Get Map
         */

@@ -27,6 +27,19 @@ enum class OGC_Service : int8_t
 }; // End of OGC_Service Enumeration
 
 
+
+/**
+ * @brief String to OGC Service
+*/
+OGC_Service StringToOGC_Service( const std::string& service );
+
+
+/**
+ * @brief OGC_Service to String
+*/
+std::string OGC_ServiceToString( const OGC_Service& service );
+
+
 } // End of OGC Namespace
 } // End of OGC Namespace
 

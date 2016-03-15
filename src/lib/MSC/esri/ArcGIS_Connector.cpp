@@ -144,6 +144,20 @@ std::string ArcGIS_Connector::Create_Get_Map_Query( MapRequest const& request )
     return sin.str();
 }
 
+
+/*******************************************/
+/*          Get the Capabilities           */
+/*******************************************/
+MSC::Capabilities::ptr_t ArcGIS_Connector::Get_Capabilities( Status& status )
+{
+    // 
+
+
+    status = Status(StatusCode::NOT_IMPLEMENTED_YET, "Not Implemented Yet.");
+    return nullptr;
+}
+
+
     
 /*********************************/
 /*       Get the Request         */

@@ -194,6 +194,8 @@ size_t OGC_Connector::Init_Callback_Handler( void *ptr,
 
     inst->m_features_output = std::string(iter,iterEnd);
 
+    BOOST_LOG_TRIVIAL(trace) << "OGC_Connector::Init_Callback_Handler: Features Output\n" << inst->m_features_output;
+
     // Cast the handler
     return num_bytes;
 }
@@ -228,6 +230,18 @@ size_t  OGC_Connector::Get_Map_Callback_Handler( void*  ptr,
     return num_bytes;
 }
 
+
+/*******************************************/
+/*          Get the Capabilities           */
+/*******************************************/
+MSC::Capabilities::ptr_t OGC_Connector::Get_Capabilities( Status& status )
+{
+    // 
+
+
+    status = Status(StatusCode::NOT_IMPLEMENTED_YET, "Not Implemented Yet.");
+    return nullptr;
+}
 
 /**********************************/
 /*           Get the map          */

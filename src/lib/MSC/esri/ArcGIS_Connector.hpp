@@ -56,7 +56,13 @@ class ArcGIS_Connector : public Base_Connector
          */
         virtual void Disconnect( Status& status );
 
+        
+        /**
+         * @brief Get the Capabilities
+        */
+        virtual MSC::Capabilities::ptr_t Get_Capabilities( Status& status );
 
+        
         /**
          * @brief Get Map
         */
