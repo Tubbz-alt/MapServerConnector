@@ -7,9 +7,12 @@
 
 // PugiXML
 #include "../thirdparty/pugixml/src/pugixml.hpp"
+#include "../utilities/Log_Utilities.hpp"
+#include "OGC_XML_Utilities.hpp"
 
 
 // C++ Libraries
+#include <iostream>
 #include <stdexcept>
 
 
@@ -60,6 +63,7 @@ Capabilities::ptr_t Capabilities::Parse_WMS_1_3_0( const std::string&  contents,
 
     // Create Capabilities Object
     Capabilities::ptr_t cap = std::make_shared<Capabilities>();
+    Status temp_status;
 
     try
     {
@@ -71,10 +75,31 @@ Capabilities::ptr_t Capabilities::Parse_WMS_1_3_0( const std::string&  contents,
         }
 
         //  Start Iterating Over Nodes
-        
-        /*pugi::xml_node_iterator tsit = telem_sources_node.begin();
-        for( ; tsit != telem_sources_node.end(); tsit++ )
-        */
+        pugi::xml_node_iterator nit = root_node.begin();
+        for( ; nit != root_node.end(); nit++ )
+        {
+            // Process the Service node
+            if( std::string(nit->name()) == "Service" ){
+                
+               Parse_WMS_1_3_0_Service_Node( cap, (*nit), temp_status );
+               if( temp_status.Get_Code() != StatusCode::SUCCESS ){
+                    throw std::runtime_error("Unable to Parse Service Node. Details: " + temp_status.ToString());
+               }
+            }
+
+            // Process the Capability Node
+            else if( std::string(nit->name()) == "Capability" ){
+                
+                std::cout << "Processing Capability Node" << std::endl;
+            }
+
+            // Otherwise, error
+            else{
+                BOOST_LOG_TRIVIAL(warning) << "Unknown Node: " << nit->name();
+            }
+
+        }
+
     }
     catch( std::exception& e )
     {

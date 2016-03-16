@@ -33,7 +33,23 @@ class Capabilities : public MSC::Capabilities
          * @brief Constructor
         */
         Capabilities();
+        
 
+        /**
+         * @brief Set the Service Name
+        */
+        inline void Set_Service_Name( const std::string& name ){
+            m_service_name = name;
+        }
+
+
+        /**
+         * @brief Get the Service name
+        */
+        inline std::string Get_Service_Name()const{
+            return m_service_name;
+        }
+        
         
         /**
          * @brief Print to String
@@ -57,6 +73,10 @@ class Capabilities : public MSC::Capabilities
         
         /// Class Name
         std::string m_class_name;
+        
+        /// Service name
+        std::string m_service_name;
+
 
 }; // End of Capabilities Class
 
