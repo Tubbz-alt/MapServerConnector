@@ -48,11 +48,14 @@ int main( int argc, char* argv[] )
     MSC::Capabilities::ptr_t capabilities = connector->Get_Capabilities(status);
 
     // Check the status
-    if( status.Get_Code() != MSC::StatusCode::SUCCESS ){
+    if( status.Get_Code() != MSC::StatusCode::SUCCESS ||
+        capabilities      == nullptr )
+    {
         throw std::runtime_error("Unable to Get-Capabilities. Details: " + status.ToString());
     }
 
-    BOOST_LOG_TRIVIAL(info) << capabilities->ToString() << std::endl;
+    // Print the Capability Info
+    BOOST_LOG_TRIVIAL(info) << "\n" << capabilities->ToString() << std::endl;
 
     // Disconnect the Server
     BOOST_LOG_TRIVIAL(info) << "Disconnecting" << std::endl;

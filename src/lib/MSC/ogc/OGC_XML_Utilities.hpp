@@ -20,6 +20,37 @@ void Parse_WMS_1_3_0_Service_Node( Capabilities::ptr_t capabilities,
                                    pugi::xml_node&     root_node,
                                    Status&             status );
 
+/**
+ * @brief Process a WMS 1.3.0 Capability Node
+*/
+void Parse_WMS_1_3_0_Capability_Node( Capabilities::ptr_t capabilities,
+                                      pugi::xml_node&     root_node,
+                                      Status&             status );
+
+/**
+ * @brief Process a WMS 1.3.0 Request Node
+*/
+void Parse_WMS_1_3_0_Request_Node( Capabilities::ptr_t capabilities,
+                                   pugi::xml_node&     root_node,
+                                   Status&             status );
+
+
+/**
+ * @brief Process a WMS Layer Node
+*/
+void Parse_WMS_1_3_0_Layer_Node( Capabilities::ptr_t  capabilities,
+                                 pugi::xml_node&      root_node,
+                                 Status&              status );
+
+
+/**
+ * @brief Process a WMS Layer Node
+*/
+void Parse_WMS_1_3_0_Layer_Node( Capabilities::ptr_t  capabilities,
+                                 OGC_Layer::ptr_t     layer_node,
+                                 pugi::xml_node&      root_node,
+                                 Status&              status );
+
 
 } // End of OGC Namespace
 } // End of MSC Namespace

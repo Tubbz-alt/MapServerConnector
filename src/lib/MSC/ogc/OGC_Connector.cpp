@@ -26,20 +26,23 @@ OGC_Connector::OGC_Connector( Configuration const& configuration )
 {
     // Log Entry
     BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Method.";
- 
+
     // Create the network connection
     curl_global_init(CURL_GLOBAL_DEFAULT);
     m_curl = curl_easy_init();
-   
+
     // Misc Variables
     Status status;
-    
+
     // Get the URL
     m_url = configuration.Get_Value("url", status);
 
+    // Get Service Info
+    m_current_service = OGC::StringToOGC_Service( m_configuration.Get_Value("ogc_service", status ));
+
     // Get WMS info
     m_wms_version = configuration.Get_Value("wms_version", status);
-    
+
     // Log Exit
     BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", End of Method.";
 }
@@ -59,8 +62,8 @@ OGC_Connector::~OGC_Connector()
         Status status;
         Disconnect( status );
     }
-    
-    // Log Exit 
+
+    // Log Exit
     BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", End of Destructor";
 }
 
@@ -70,7 +73,7 @@ OGC_Connector::~OGC_Connector()
 /****************************/
 void OGC_Connector::Connect( Status& status )
 {
-    
+
     // Check the initialization
     if( m_curl == nullptr ||
         m_curl == NULL )
@@ -79,11 +82,11 @@ void OGC_Connector::Connect( Status& status )
                          "curl failed to initialize.");
         return;
     }
-    
+
     // Setup CURL
     char* typeinfo;
     CURLcode cresult;
-    
+
 
     // Construct URL
     std::string url = Create_Get_Capabilities_Query();
@@ -91,11 +94,11 @@ void OGC_Connector::Connect( Status& status )
     curl_easy_setopt( m_curl,
                       CURLOPT_URL,
                       url.c_str());
-    
-    
+
+
     // Create callbacks and data
-    curl_easy_setopt( m_curl, 
-                      CURLOPT_WRITEFUNCTION, 
+    curl_easy_setopt( m_curl,
+                      CURLOPT_WRITEFUNCTION,
                       &OGC_Connector::Init_Callback_Handler );
     curl_easy_setopt( m_curl,
                       CURLOPT_WRITEDATA,
@@ -103,14 +106,14 @@ void OGC_Connector::Connect( Status& status )
     //curl_easy_setopt(m_curl, CURLOPT_VERBOSE, 1L);
 
     cresult = curl_easy_perform(m_curl);
-    
+
 
     /*
     curl_easy_getinfo( image, CURLINFO_CONTENT_TYPE, &typeinfo);
     imgresult = curl_easy_perform(image);
     */
-   
-    
+
+
     // Set the Connection Status
     m_is_connected = true;
 
@@ -130,7 +133,7 @@ void OGC_Connector::Disconnect( Status& status )
     // Finalize Curl
     curl_easy_cleanup(m_curl);
     curl_global_cleanup();
-    
+
     // Set the connection status
     m_is_connected = false;
 
@@ -145,10 +148,11 @@ void OGC_Connector::Disconnect( Status& status )
 std::string OGC_Connector::Create_Get_Capabilities_Query()const
 {
     // Create string
-    std::string output = m_url + "?SERVICE=WMS&";
-    
+    std::string output = m_url + "?REQUEST=GetCapabilities";
+    //&SERVICE=WMS&";
+
     // Add the version
-    output += "VERSION=" + m_wms_version + "&REQUEST=GetCapabilities";
+    output += "&VERSION=" + m_wms_version + "&SERVICE=WMS";//REQUEST=GetCapabilities";
 
     return output;
 }
@@ -175,26 +179,30 @@ std::string OGC_Connector::Create_Get_Map_Query( const MapRequest& request )
 /************************************/
 /*          Callback Handler        */
 /************************************/
-size_t OGC_Connector::Init_Callback_Handler( void *ptr, 
+size_t OGC_Connector::Init_Callback_Handler( void *ptr,
                                              size_t size,
-                                             size_t nmemb, 
+                                             size_t nmemb,
                                              void* pInstance )
 {
-    
+
+    // Log Entry
+    BOOST_LOG_TRIVIAL(debug) << "OGC_Connector::Init_Callback_Handler:" << __LINE__ << ", Start of Method.";
+
     // Compute buffer size
     size_t num_bytes = size * nmemb;
-    
-    
+
     // Cast the instance
     OGC_Connector* inst = static_cast<OGC_Connector*>(pInstance);
-    
+
     // Create iterators
     char *iter = (char*)ptr;
     char *iterEnd = iter + num_bytes;
 
-    inst->m_features_output = std::string(iter,iterEnd);
+    inst->m_features_output += std::string(iter,iterEnd);
 
     BOOST_LOG_TRIVIAL(trace) << "OGC_Connector::Init_Callback_Handler: Features Output\n" << inst->m_features_output;
+
+
 
     // Cast the handler
     return num_bytes;
@@ -221,12 +229,12 @@ size_t  OGC_Connector::Get_Map_Callback_Handler( void*  ptr,
 
     // Allocate buffer
     char* buffer = (char*)ptr;
-    
+
 
     // Push to the features
     inst->m_latest_response.Append_Image_Buffer( buffer,
                                                  num_bytes );
-    
+
     return num_bytes;
 }
 
@@ -236,11 +244,22 @@ size_t  OGC_Connector::Get_Map_Callback_Handler( void*  ptr,
 /*******************************************/
 MSC::Capabilities::ptr_t OGC_Connector::Get_Capabilities( Status& status )
 {
-    // 
+  // Parse the output
+  if( m_current_service == OGC::OGC_Service::WMS &&
+      m_wms_version     == "1.3.0" )
+  {
+      m_capabilities = OGC::Capabilities::Parse_WMS_1_3_0( m_features_output,
+                                                           m_capabilities_status );
+  }
+  else{
+      m_capabilities_status = Status( StatusCode::NOT_IMPLEMENTED_YET,
+                                      "Get-Capabilities not implemented yet. Version: " + m_wms_version );
+  }
 
 
-    status = Status(StatusCode::NOT_IMPLEMENTED_YET, "Not Implemented Yet.");
-    return nullptr;
+    //  Parse the Capabilities
+    status = m_capabilities_status;
+    return m_capabilities;
 }
 
 /**********************************/
@@ -262,11 +281,11 @@ MapResponse OGC_Connector::Get_Map( MapRequest const& request )
     curl_easy_setopt( m_curl,
                       CURLOPT_URL,
                       url.c_str());
-    
-    
+
+
     // Create callbacks and data
-    curl_easy_setopt( m_curl, 
-                      CURLOPT_WRITEFUNCTION, 
+    curl_easy_setopt( m_curl,
+                      CURLOPT_WRITEFUNCTION,
                       &OGC_Connector::Get_Map_Callback_Handler );
     curl_easy_setopt( m_curl,
                       CURLOPT_WRITEDATA,
@@ -277,7 +296,7 @@ MapResponse OGC_Connector::Get_Map( MapRequest const& request )
 
     // Request
     m_latest_response.Set_Status(Status(StatusCode::NOT_IMPLEMENTED_YET));
-    
+
     // Log Entry
     BOOST_LOG_TRIVIAL(debug) << "End of Get_Map Request.";
 

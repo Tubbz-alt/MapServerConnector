@@ -27,9 +27,9 @@ OGC_Service StringToOGC_Service( const std::string& service )
 }
 
 
-/**
- * @brief OGC_Service to String
-*/
+/************************************************/
+/*           OGC_Service to String              */
+/************************************************/
 std::string OGC_ServiceToString( const OGC_Service& service )
 {
     switch(service)
@@ -51,7 +51,7 @@ std::string OGC_ServiceToString( const OGC_Service& service )
         default:
             return "UNKNOWN";
     }
-    return OGC_Service::UNKNOWN;
+    return "UNKNOWN";
 }
 
 

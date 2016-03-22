@@ -15,6 +15,7 @@
 #include "../Base_Connector.hpp"
 #include "../Configuration.hpp"
 #include "../MapRequest.hpp"
+#include "OGC_Capabilities.hpp"
 #include "OGC_Enumerations.hpp"
 
 
@@ -133,6 +134,8 @@ class OGC_Connector : public Base_Connector
 
         /// Unparsed Features / Capabilities
         std::string m_features_output;
+        MSC::OGC::Capabilities::ptr_t m_capabilities;
+        Status m_capabilities_status;
         
         /// Latest Request
         MapResponse  m_latest_response;

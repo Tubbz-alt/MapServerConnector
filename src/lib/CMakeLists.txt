@@ -64,6 +64,8 @@ set( LIBRARY_SOURCES
      MSC/io/ConfigParser.cpp
      MSC/ogc/OGC_Capabilities.cpp
      MSC/ogc/OGC_Connector.cpp
+     MSC/ogc/OGC_Enumerations.cpp
+     MSC/ogc/OGC_Layer.cpp
      MSC/ogc/OGC_XML_Utilities.cpp
      MSC/thirdparty/pugixml/src/pugixml.cpp
      MSC/utilities/GDAL_Utilities.cpp
@@ -90,6 +92,8 @@ set( LIBRARY_HEADERS
      MSC/io/ConfigParser.hpp
      MSC/ogc/OGC_Capabilities.hpp
      MSC/ogc/OGC_Connector.hpp
+     MSC/ogc/OGC_Enumerations.hpp
+     MSC/ogc/OGC_Layer.hpp
      MSC/ogc/OGC_XML_Utilities.hpp
      MSC/thirdparty/pugixml/src/pugixml.hpp
      MSC/thirdparty/pugixml/src/pugiconfig.hpp

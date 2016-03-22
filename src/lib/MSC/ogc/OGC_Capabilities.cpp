@@ -13,30 +13,64 @@
 
 // C++ Libraries
 #include <iostream>
+#include <sstream>
 #include <stdexcept>
 
 
 namespace MSC{
 namespace OGC{
 
+
 /***********************************/
 /*          Constructor            */
 /***********************************/
-Capabilities::Capabilities()
+Capabilities::Capabilities( const OGC_Service& service_type,
+                            const std::string& service_version )
  : MSC::Capabilities(),
-   m_class_name("Capabilities")
+   m_class_name("Capabilities"),
+   m_service_type(service_type),
+   m_service_version(service_version)
 {
 
 
 }
 
 
+/********************************************/
+/*          Add a Layer to the List         */
+/********************************************/
+void MSC::OGC::Capabilities::Add_Layer( OGC_Layer::ptr_t layer )
+{
+    // Make sure not null
+    if( layer == nullptr ){
+        BOOST_LOG_TRIVIAL(error) << "Attempted to add null layer. Skipping.";
+        return;
+    }
+    m_layers.push_back(layer);
+}
+
+
 /***************************************/
 /*          Print to String            */
 /***************************************/
-std::string Capabilities::ToString()const
+std::string MSC::OGC::Capabilities::ToString()const
 {
-    return "";
+    // Create the output stream
+    std::stringstream sin;
+
+    // Print Service Information
+    sin << "OGC-Service : " << OGC_ServiceToString(m_service_type) << std::endl;
+    sin << "Version     : " << m_service_version << std::endl;
+    sin << "Service Name: " << m_service_name << std::endl;
+    
+    // Print Layers
+    sin << "Layers:\n";
+    for( auto it = m_layers.begin(); it != m_layers.end(); it++ )
+    {
+        sin << (*it)->ToString(4) << std::endl;
+    }
+
+    return sin.str();
 }
 
 
@@ -62,7 +96,8 @@ Capabilities::ptr_t Capabilities::Parse_WMS_1_3_0( const std::string&  contents,
     //version="1.3.0" xmlns="http://www.opengis.net/wms" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.opengis.net/wms http://schemas.opengis.net/wms/1.3.0/capabilities_1_3_0.xsd">
 
     // Create Capabilities Object
-    Capabilities::ptr_t cap = std::make_shared<Capabilities>();
+    Capabilities::ptr_t cap = std::make_shared<Capabilities>( OGC_Service::WMS, 
+                                                              "1.3.0");
     Status temp_status;
 
     try
@@ -90,7 +125,10 @@ Capabilities::ptr_t Capabilities::Parse_WMS_1_3_0( const std::string&  contents,
             // Process the Capability Node
             else if( std::string(nit->name()) == "Capability" ){
                 
-                std::cout << "Processing Capability Node" << std::endl;
+                Parse_WMS_1_3_0_Capability_Node( cap, (*nit), temp_status );
+                if( temp_status.Get_Code() != StatusCode::SUCCESS ){
+                    throw std::runtime_error("Unable to Parse Capability Node. Details: " + temp_status.ToString());
+                }
             }
 
             // Otherwise, error

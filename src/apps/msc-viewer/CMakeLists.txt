@@ -53,6 +53,10 @@ include_directories(${Qt5Widgets_INCLUDES})
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${Qt5Widgets_EXECUTABLE_COMPILE_FLAGS}")
 add_definitions(${Qt5Widgets_DEFINITIONS})
 
+message("Libraries: ${Qt5Widgets_LIBRARIES}")
+message("Qt5Widget Includes: ${Qt5Widgets_INCLUDES}")
+message("Qt5Widget Defs: ${Qt5Widgets_DEFINITIONS}")
+
 
 #----------------------------------#
 #-      Add MSC to the path       -#
