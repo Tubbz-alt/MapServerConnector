@@ -55,6 +55,7 @@ set( LIBRARY_SOURCES
      MSC/Connection_Generator_Factory.cpp
      MSC/Configuration.cpp 
      MSC/Enumerations.cpp
+     MSC/Geometries.cpp
      MSC/Initialization.cpp
      MSC/MapRequest.cpp
      MSC/MapServiceConnector.cpp
@@ -62,6 +63,7 @@ set( LIBRARY_SOURCES
      MSC/Status.cpp
      MSC/esri/ArcGIS_Connector.cpp
      MSC/io/ConfigParser.cpp
+     MSC/ogc/OGC_BoundingBox.cpp
      MSC/ogc/OGC_Capabilities.cpp
      MSC/ogc/OGC_Connector.cpp
      MSC/ogc/OGC_Enumerations.cpp
@@ -83,6 +85,7 @@ set( LIBRARY_HEADERS
      MSC/Connection_Generator_Factory.hpp
      MSC/Configuration.hpp
      MSC/Enumerations.hpp
+     MSC/Geometries.hpp
      MSC/Initialization.hpp
      MSC/MapRequest.hpp
      MSC/MapServiceConnector.hpp
@@ -90,6 +93,7 @@ set( LIBRARY_HEADERS
      MSC/Status.hpp
      MSC/esri/ArcGIS_Connector.hpp
      MSC/io/ConfigParser.hpp
+     MSC/ogc/OGC_BoundingBox.hpp
      MSC/ogc/OGC_Capabilities.hpp
      MSC/ogc/OGC_Connector.hpp
      MSC/ogc/OGC_Enumerations.hpp

@@ -12,6 +12,8 @@
 #include <string>
 #include <vector>
 
+// MSC Libraries
+#include "OGC_BoundingBox.hpp"
 
 namespace MSC{
 namespace OGC{
@@ -70,11 +72,26 @@ class OGC_Layer
 
         /**
          * @brief Add Layer
+         *
+         * @param[in] layer Layer information to add.
         */
         inline void Add_Layer( OGC_Layer::ptr_t layer ){
             m_layers.push_back(layer);
         }
 
+
+        /**
+         * @brief Add CRS
+         *
+         * @param[in] crs Coordinate Reference System to add.
+        */
+        void Add_CRS( const std::string& crs );
+        
+
+        /**
+         * @brief Add Bounding Box
+        */
+        void Add_BBox( const BoundingBox& bbox );
 
         /**
          * @brief Print to String
@@ -92,6 +109,12 @@ class OGC_Layer
 
         /// List of Layers
         std::vector<OGC_Layer::ptr_t> m_layers;
+        
+        /// List of Coordinate Systems
+        std::vector<std::string> m_crs_list;
+
+        /// List of Bounding Boxes
+        std::vector<BoundingBox> m_bbox_list;
 
 }; // End of OGC_Layer Class
 
