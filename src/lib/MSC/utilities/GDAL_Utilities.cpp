@@ -23,6 +23,15 @@ void Decode_Raster( char*            input_buffer,
                     int&             output_cols,
                     int&             output_channels )
 {
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << "Decode_Raster, Start of Method";
+
+    // Error Checking
+    if( input_buffer == nullptr )
+    {
+        BOOST_LOG_TRIVIAL(error) << "Decode_Raster, Input Buffer was Null.";
+    }
+
 
     // Initialize Outputs 
     output_buffer   = nullptr;
@@ -32,11 +41,21 @@ void Decode_Raster( char*            input_buffer,
     
 
     // Create memory file system object
-    VSIFCloseL( VSIFileFromMemBuffer( "/vsimem/work.png", 
-                                      (unsigned char*)input_buffer,
-                                      input_buffer_size,
-                                      false ));
+    FILE* handle = VSIFileFromMemBuffer( "/vsimem/work.png", 
+                                        (unsigned char*)input_buffer,
+                                        input_buffer_size,
+                                        false );
 
+    if( handle == nullptr )
+    {
+        BOOST_LOG_TRIVIAL(error) << "Decode_Raster, Handle Returned was Null.";
+        return;
+    }
+
+    VSIFCloseL( handle );
+
+    // Opening Dataset
+    BOOST_LOG_TRIVIAL(trace) << "Decode_Raster, Building Dataset.";
  
 
      // Open memory buffer for read.

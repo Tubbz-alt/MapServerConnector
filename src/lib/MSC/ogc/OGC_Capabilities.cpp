@@ -85,9 +85,10 @@ Capabilities::ptr_t Capabilities::Parse_WMS_1_3_0( const std::string&  contents,
 	pugi::xml_parse_result result = xmldoc.load_string( contents.c_str() );
 
     // check for loading errors
-	if( result == false ){
+	if( result == false )
+    {
 		status = Status( StatusCode::INVALID_FORMAT,
-                         "Unable to parse WMS Capabilities data.");
+                         "Unable to parse WMS Capabilities data. STR: " + contents);
 		return nullptr;
 	}
 
@@ -106,7 +107,6 @@ Capabilities::ptr_t Capabilities::Parse_WMS_1_3_0( const std::string&  contents,
         // Get the Root Node
         pugi::xml_node root_node = xmldoc.child(ROOT_NODE_QUERY.c_str());
         if( root_node == pugi::xml_node() ){
-            throw std::runtime_error("No Root Node Found.");
         }
 
         //  Start Iterating Over Nodes

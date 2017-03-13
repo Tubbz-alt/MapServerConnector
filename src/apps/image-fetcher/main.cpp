@@ -29,8 +29,8 @@ int main( int argc, char* argv[] )
     MSC::Status status = MSC::Status(MSC::StatusCode::SUCCESS);
 
     // Image Size
-    const int image_rows = 1000;
-    const int image_cols = 1000;
+    const int image_rows = 600;
+    const int image_cols = 600;
 
     // Create a MapServiceConnector
     MSC::MapServiceConnector::ptr_t connector = MSC::MapServiceConnectorFactory::Create( config_pathname, status );

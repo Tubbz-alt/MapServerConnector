@@ -17,12 +17,12 @@ ToolbarWidget::ToolbarWidget( Options::ptr_t options,
     // Create the Layout
     m_layout = new QVBoxLayout();
 
-    
+
     // Create the TabWidget
     m_tab_widget = new QTabWidget(this);
     m_layout->addWidget(m_tab_widget);
 
-    
+
     // Create various sub-widgets
     ViewerStatusWidget* viewerStatusWidget = new ViewerStatusWidget( m_options );
     m_tab_widget->addTab( viewerStatusWidget, "Viewer Options");
@@ -32,9 +32,11 @@ ToolbarWidget::ToolbarWidget( Options::ptr_t options,
 
     AddServiceWidget* addServiceWidget = new AddServiceWidget( m_options );
     m_tab_widget->addTab( addServiceWidget, "Add Service");
-    
+
+    ServiceCreationWidget* serviceCreationWidget = new ServiceCreationWidget( m_options );
+    m_tab_widget->addTab( serviceCreationWidget, "Service Creation");
+
     // Set the Layout
     setLayout(m_layout);
 
 }
-

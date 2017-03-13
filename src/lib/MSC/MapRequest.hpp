@@ -62,6 +62,13 @@ class MapRequest
             return m_image_cols;
         }
         
+        /**
+         * @brief Get the CRS
+        */
+        inline std::string Get_CRS()const{
+            return m_crs;
+        }
+
 
         /**
          * @brief Add Layer

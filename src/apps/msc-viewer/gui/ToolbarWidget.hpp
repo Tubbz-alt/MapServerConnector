@@ -17,6 +17,7 @@
 // MSC Viewer Libraries
 #include "../Options.hpp"
 #include "AddServiceWidget.hpp"
+#include "ServiceCreationWidget.hpp"
 #include "ServiceListWidget.hpp"
 #include "ViewerStatusWidget.hpp"
 
@@ -29,7 +30,7 @@ class ToolbarWidget : public QWidget
     Q_OBJECT
 
     public:
-        
+
         /**
          * @brief Constructor
          *
@@ -39,9 +40,9 @@ class ToolbarWidget : public QWidget
         ToolbarWidget( Options::ptr_t options,
                        QWidget*       parent );
 
-        
+
     private:
-        
+
         /// Configuration Options
         Options::ptr_t m_options;
 

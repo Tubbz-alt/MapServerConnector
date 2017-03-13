@@ -70,7 +70,7 @@ std::string MapRequest::To_WMS_URL()const
     }
 
     //CRS
-    sin << "&SRS=" << m_crs;
+    sin << "&CRS=" << m_crs;
 
     // BBOX
     sin << "&BBOX=" << std::fixed << m_bbox_min_x << "," << m_bbox_min_y << "," << m_bbox_max_x << "," << m_bbox_max_y;
@@ -257,7 +257,9 @@ void MapResponse::Get_Unpacked_Image( char*&  buffer,
                                       int&    cols,
                                       int&    channels )
 {
-    
+    // Log Entry
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Method";
+
     // Call on GDAL
     Decode_Raster( m_image_buffer,
                    m_image_buffer_size_bytes,

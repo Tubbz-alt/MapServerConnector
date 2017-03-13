@@ -35,6 +35,13 @@ namespace MSC{
 #define CLASS_LOG m_class_name + "::" + std::string(__func__) 
 
 /**
+ * @brief Macro for logging the entry of a class method.
+*/
+#define CLASS_LOG_ENTRY() BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Start of Method.";
+#define CLASS_LOG_EXIT() BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", End of Method.";
+
+
+/**
  * @brief Initialize the Logger
  *
  * @param[in] severity Severity of messages to keep.

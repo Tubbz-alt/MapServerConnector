@@ -78,6 +78,8 @@ set( MSC_VIEWER_SOURCES
     gui/MainWindow.hpp
     gui/MapViewerWidget.cpp
     gui/MapViewerWidget.hpp
+    gui/ServiceCreationWidget.cpp
+    gui/ServiceCreationWidget.hpp
     gui/ServiceListWidget.cpp
     gui/ServiceListWidget.hpp
     gui/ServiceStatusWidget.cpp
@@ -114,4 +116,3 @@ target_link_libraries( msc-viewer
                        ${OpenCV_LIBRARIES}
                        ${Boost_LIBRARIES}
                        ${Qt5Widgets_LIBRARIES})
-

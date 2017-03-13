@@ -44,6 +44,10 @@ Connection_Generator_Factory::~Connection_Generator_Factory()
 /*********************************************/
 Status Connection_Generator_Factory::Initialize()
 {
+    // Log Entry
+    std::string m_class_name = "Connection_Generator_Factory";
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Running Initialize.";
+
     if( generator == nullptr )
     {
         generator = gen_ptr(new Connection_Generator_Factory());
@@ -116,6 +120,9 @@ Base_Connector::ptr_t Connection_Generator_Factory::Create( const Configuration&
     if( status.Get_Code() != StatusCode::SUCCESS ){
         return nullptr;
     }
+    
+    // Log
+    BOOST_LOG_TRIVIAL(trace) << CLASS_LOG << ", Connector Found: " << name;
 
     // Check if name exists
     if( instance->m_generator_map.find(name) == 
